@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>İletişim | Kılıç Enerji</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+
+    
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo-container">
+                <a href="index.html">
+                    <img src="assets/img/logos/logo.png" alt="Logo" class="logo-img">
+                </a>
+            </div>
+
+            <ul class="nav-links">
+                <li><a href="index.html">Anasayfa</a></li>
+                <li><a href="hakkimizda.html">Hakkımızda</a></li>
+                
+                <li class="dropdown-parent">
+                    <a href="hizmetler.html" class="active">Hizmetler ▾</a>
+                    <ul class="dropdown">
+                        <li><a href="iklim.html">İklim Kanunu</a></li>
+                        <li><a href="karbon.html">Karbon Ayak İzi</a></li>
+                        <li><a href="su.html">Su Ayak İzi</a></li>
+                        <li><a href="enerji.html">Sürdürülebilir Enerji</a></li>
+                        <li><a href="verimlilik.html">Enerji Verimliliği</a></li>
+                        <li><a href="sehir.html">Akıllı Şehircilik</a></li>
+                        <li><a href="hava.html">Hava Kalitesi</a></li>
+                        <li><a href="arsiv.html">Dijital Arşivleme</a></li>
+                        <li><a href="yol-haritasi.html">Kurumsal Yol Haritası</a></li>
+                    </ul>
+                </li>
+                
+                <li><a href="is-birligi.html">İş Birliği</a></li>
+                <li><a href="iletisim.html" class="btn-cta">İletişim</a></li>
+            </ul>
+
+            <div class="menu-toggle">
+                <i data-lucide="menu"></i>
+            </div>
+        </div>
+    </nav>
+
+    <div class="map-hero-section">
+        <iframe 
+            width="100%" 
+            height="100%" 
+            frameborder="0" 
+            scrolling="no" 
+            marginheight="0" 
+            marginwidth="0"
+            loading="lazy"  
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3125.7556185696103!2d27.139417166684172!3d38.4240121717114!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14bbd8f13cd4ef3f%3A0x22d9528708118bfc!2zQWx0YXkgxLDFnyBNZXJrZXpp!5e0!3m2!1str!2str!4v1770275577348!5m2!1str!2str">
+        </iframe>
+    </div>
+
+    <section class="section-premium" style="padding-top: 60px;"> <div class="container contact-wrapper">
+            
+            <div class="contact-info-side">
+                <h2 class="premium-title" style="font-size: 1.8rem;">İletişim Bilgileri</h2>
+                <p style="color:var(--text-muted); margin-bottom: 30px;">Projeleriniz ve çözüm ortaklığı için bir kahveye bekleriz.</p>
+                
+                <div class="info-cards">
+                    <div class="info-card">
+                        <div class="icon-box">
+                            <i data-lucide="map-pin"></i>
+                        </div>
+                        <div class="info-text">
+                            <h4>Genel Merkez</h4>
+                            <p>İsmet Kaplan Mah. Şair Eşref Bulvarı<br>Altay İş Merkezi No: 18, İzmir</p>
+                        </div>
+                    </div>
+
+                    <div class="info-card">
+                        <div class="icon-box">
+                            <i data-lucide="phone-call"></i>
+                        </div>
+                        <div class="info-text">
+                            <h4>Telefon & E-posta</h4>
+                            <p>+90 554 580 00 01</p>
+                            <p>bilgi@bilalkilicenerji.com</p>
+                        </div>
+                    </div>
+                </div>
+                
+                </div>
+
+            <div class="contact-form-side">
+                <div class="form-box">
+                    <h2 class="premium-title" style="font-size: 1.8rem; margin-bottom: 10px;">Mesaj Gönderin</h2>
+                    <p style="color:var(--text-muted); margin-bottom: 30px;">Formu doldurun, uzman ekibimiz en kısa sürede sizinle iletişime geçsin.</p>
+                    
+                    <form action="#" method="post">
+                        <div class="form-group">
+                            <label>Adınız Soyadınız</label>
+                            <div class="input-wrapper">
+                                <i data-lucide="user" class="input-icon"></i>
+                                <input type="text" name="name" placeholder="Ad Soyad" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>E-posta Adresiniz</label>
+                            <div class="input-wrapper">
+                                <i data-lucide="mail" class="input-icon"></i>
+                                <input type="email" name="email" placeholder="ornek@sirket.com" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Konu</label>
+                            <div class="input-wrapper">
+                                <i data-lucide="tag" class="input-icon"></i>
+                                <select name="subject">
+                                    <option value="">Seçiniz...</option>
+                                    <option value="Teklif">Teklif İsteği</option>
+                                    <option value="Karbon">Karbon Ayak İzi Danışmanlığı</option>
+                                    <option value="Enerji">Enerji Verimliliği</option>
+                                    <option value="Diger">Diğer</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Mesajınız</label>
+                            <textarea name="message" rows="5" placeholder="Projenizden bahsedin..." required></textarea>
+                        </div>
+
+                        <button type="submit" class="btn-submit">
+                            GÖNDER <i data-lucide="send" style="width:18px; margin-left:8px;"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <footer id="footer">
+        <div class="container footer-container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="footer-logo">
+                        <img src="assets/img/logos/logo.png" alt="Kılıç Enerji Logo">
+                    </div>
+                    <p class="footer-desc">
+                        Gelecek nesillere yaşanabilir bir dünya bırakmak için sürdürülebilir enerji ve dijital dönüşüm çözümleri üretiyoruz.
+                    </p>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Kurumsal</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Anasayfa</a></li>
+                        <li><a href="hakkimizda.html">Hakkımızda</a></li>
+                        <li><a href="is-birligi.html">İş Birliği & Çözüm Ortakları</a></li>
+                        <li><a href="sss.html">S.S.S.</a> </li>
+                        <li><a href="kvkk.html">KVKK & Gizlilik</a> </li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Hizmetler</h4>
+                    <ul class="footer-links">
+                        <li><a href="iklim.html">İklim Kanunu</a></li>
+                        <li><a href="karbon.html">Karbon Ayak İzi</a></li>
+                        <li><a href="enerji.html">Sürdürülebilir Enerji</a></li>
+                        <li><a href="sehir.html">Akıllı Şehircilik</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Bize Ulaşın</h4>
+                    <ul class="contact-list">
+                        <li><i data-lucide="map-pin"></i> <span>İsmet Kaplan Mahallesi Şair Eşref Bulvarı Altay İş Merkezi No: 18, İzmir</span></li>
+                        <li><i data-lucide="mail"></i> <span>bilgi@bilalkilicenerji.com</span></li>
+                        <li><i data-lucide="phone"></i> <span>+90 554 580 00 01</span></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Kılıç Enerji Danışmanlık A.Ş. Tüm hakları saklıdır.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

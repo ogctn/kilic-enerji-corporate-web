@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kurumsal Yol Haritası | Kılıç Enerji</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        /* BU SAYFAYA ÖZEL TASARIM (TIMELINE) */
+        .roadmap-section { padding: 80px 0; background: #fff; }
+        .timeline { position: relative; max-width: 1000px; margin: 0 auto; }
+        .timeline::after {
+            content: ''; position: absolute; width: 6px; background-color: #e2e8f0; 
+            top: 0; bottom: 0; left: 50%; margin-left: -3px; border-radius: 3px;
+        }
+        .timeline-container { padding: 10px 40px; position: relative; background-color: inherit; width: 50%; }
+        .timeline-container::after {
+            content: ''; position: absolute; width: 25px; height: 25px; right: -13px; background-color: #fff; 
+            border: 4px solid var(--primary); top: 25px; border-radius: 50%; z-index: 1;
+        }
+        .left { left: 0; }
+        .right { left: 50%; }
+        .left::before {
+            content: " "; height: 0; position: absolute; top: 28px; width: 0; z-index: 1; right: 30px; 
+            border: medium solid white; border-width: 10px 0 10px 10px; border-color: transparent transparent transparent #f1f5f9;
+        }
+        .right::before {
+            content: " "; height: 0; position: absolute; top: 28px; width: 0; z-index: 1; left: 30px; 
+            border: medium solid white; border-width: 10px 10px 10px 0; border-color: transparent #f1f5f9 transparent transparent;
+        }
+        .right::after { left: -13px; }
+        .content { padding: 20px 30px; background-color: #f8fafc; position: relative; border-radius: 12px; border: 1px solid #cbd5e1; }
+        
+        /* Görsel Alanları */
+        .visual-box {
+            width: 100%; height: 200px; background: #e2e8f0; margin-top: 15px; border-radius: 8px; 
+            display: flex; align-items: center; justify-content: center; overflow: hidden;
+        }
+        .visual-box img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
+        .visual-box:hover img { transform: scale(1.05); }
+
+        @media screen and (max-width: 768px) {
+            .timeline::after { left: 31px; }
+            .timeline-container { width: 100%; padding-left: 70px; padding-right: 25px; }
+            .timeline-container::after { left: 19px; }
+            .right { left: 0%; }
+            .left::before, .right::before { left: 60px; border: medium solid white; border-width: 10px 10px 10px 0; border-color: transparent #f1f5f9 transparent transparent; }
+        }
+    </style>
+</head>
+<body>
+
+    
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo-container">
+                <a href="index.html">
+                    <img src="assets/img/logos/logo.png" alt="Logo" class="logo-img">
+                </a>
+            </div>
+
+            <ul class="nav-links">
+                <li><a href="index.html">Anasayfa</a></li>
+                <li><a href="hakkimizda.html">Hakkımızda</a></li>
+                
+                <li class="dropdown-parent">
+                    <a href="hizmetler.html" class="active">Hizmetler ▾</a>
+                    <ul class="dropdown">
+                        <li><a href="iklim.html">İklim Kanunu</a></li>
+                        <li><a href="karbon.html">Karbon Ayak İzi</a></li>
+                        <li><a href="su.html">Su Ayak İzi</a></li>
+                        <li><a href="enerji.html">Sürdürülebilir Enerji</a></li>
+                        <li><a href="verimlilik.html">Enerji Verimliliği</a></li>
+                        <li><a href="sehir.html">Akıllı Şehircilik</a></li>
+                        <li><a href="hava.html">Hava Kalitesi</a></li>
+                        <li><a href="arsiv.html">Dijital Arşivleme</a></li>
+                        <li><a href="yol-haritasi.html">Kurumsal Yol Haritası</a></li>
+                    </ul>
+                </li>
+                
+                <li><a href="is-birligi.html">İş Birliği</a></li>
+                <li><a href="iletisim.html" class="btn-cta">İletişim</a></li>
+            </ul>
+
+            <div class="menu-toggle">
+                <i data-lucide="menu"></i>
+            </div>
+        </div>
+    </nav>
+
+    <div class="page-header-simple">
+        <div class="container">
+            <h1>Kurumsal Dönüşüm <span class="text-gradient">Yol Haritası</span></h1>
+            <p>Mevzuat uyumundan dijitalleşmeye giden yolda, 6 aylık stratejik uygulama planımız.</p>
+        </div>
+    </div>
+
+    <section class="roadmap-section">
+        <div class="timeline">
+            
+            <div class="timeline-container left">
+                <div class="content">
+                    <h2 style="color:var(--primary);">1. Ay: Analiz ve Teşhis</h2>
+                    <p>Kurumun enerji, karbon ve su verilerinin mevcut durumu (AS-IS) analiz edilir. Yasal riskler raporlanır.</p>
+                    <div class="visual-box">
+                        <img src="assets/img/hero-bg.jpg" alt="Analiz Grafiği"> 
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-container right">
+                <div class="content">
+                    <h2 style="color:var(--secondary);">2. Ay: Veri Dijitalleşmesi</h2>
+                    <p>Manuel veri toplama süreci sonlandırılır. IoT sensörleri ve dijital izleme yazılımları devreye alınır.</p>
+                    <div class="visual-box">
+                        <img src="assets/img/hero-bg.jpg" alt="Dijital Ekran">
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-container left">
+                <div class="content">
+                    <h2 style="color:var(--accent-orange);">3. Ay: Projelendirme</h2>
+                    <p>Verimlilik Artırıcı Projeler (VAP) ve GES yatırımları için fizibilite dosyaları hazırlanır.</p>
+                    <div class="visual-box">
+                        <img src="assets/img/hero-bg.jpg" alt="Proje Çizimi">
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-container right">
+                <div class="content">
+                    <h2 style="color:#0f172a;">4. Ay: Finansman ve Hibe</h2>
+                    <p>Hazırlanan projeler için uygun hibe fonlarına (Dünya Bankası, AB, Kalkınma Ajansı) başvuru yapılır.</p>
+                    <div class="visual-box">
+                        <img src="assets/img/hero-bg.jpg" alt="Finansman">
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-container left">
+                <div class="content">
+                    <h2 style="color:var(--primary);">5. Ay: Uygulama</h2>
+                    <p>Saha montajları, cihaz kurulumları ve sistem entegrasyonları Kılıç Enerji teknik ekibiyle tamamlanır.</p>
+                    <div class="visual-box">
+                        <img src="assets/img/hero-bg.jpg" alt="Uygulama">
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-container right">
+                <div class="content">
+                    <h2 style="color:var(--secondary);">6. Ay: Belgelendirme</h2>
+                    <p>ISO 14064, ISO 50001 sertifikaları alınır ve Sürdürülebilirlik Raporu yayınlanır.</p>
+                    <div class="visual-box">
+                        <img src="assets/img/hero-bg.jpg" alt="Belgelendirme">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="container" style="margin-top: 80px; text-align: center;">
+            <a href="iletisim.html" class="btn-detail-link" style="font-size: 1.2rem;">
+                Kurumunuza Özel Yol Haritası İsteyin <i data-lucide="arrow-right"></i>
+            </a>
+        </div>
+    </section>
+
+    <footer id="footer">
+        <div class="container footer-container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="footer-logo">
+                        <img src="assets/img/logos/logo.png" alt="Kılıç Enerji Logo">
+                    </div>
+                    <p class="footer-desc">
+                        Gelecek nesillere yaşanabilir bir dünya bırakmak için sürdürülebilir enerji ve dijital dönüşüm çözümleri üretiyoruz.
+                    </p>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Kurumsal</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Anasayfa</a></li>
+                        <li><a href="hakkimizda.html">Hakkımızda</a></li>
+                        <li><a href="is-birligi.html">İş Birliği & Çözüm Ortakları</a></li>
+                        <li><a href="sss.html">S.S.S.</a> </li>
+                        <li><a href="kvkk.html">KVKK & Gizlilik</a> </li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Hizmetler</h4>
+                    <ul class="footer-links">
+                        <li><a href="iklim.html">İklim Kanunu</a></li>
+                        <li><a href="karbon.html">Karbon Ayak İzi</a></li>
+                        <li><a href="enerji.html">Sürdürülebilir Enerji</a></li>
+                        <li><a href="sehir.html">Akıllı Şehircilik</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Bize Ulaşın</h4>
+                    <ul class="contact-list">
+                        <li><i data-lucide="map-pin"></i> <span>İsmet Kaplan Mahallesi Şair Eşref Bulvarı Altay İş Merkezi No: 18, İzmir</span></li>
+                        <li><i data-lucide="mail"></i> <span>bilgi@bilalkilicenerji.com</span></li>
+                        <li><i data-lucide="phone"></i> <span>+90 554 580 00 01</span></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Kılıç Enerji Danışmanlık A.Ş. Tüm hakları saklıdır.</p>
+            </div>
+        </div>
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html>
