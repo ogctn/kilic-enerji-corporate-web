@@ -1119,4 +1119,7 @@ footer {
     .page-header-simple h1 {
         font-size: 1.8rem;
     }
+    .nav-links.active {
+        right: 0;
+    }
 }
