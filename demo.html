@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proje Demo İndeksi | Kılıç Enerji</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body {
+            background-color: #f8fafc;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+        .demo-container {
+            background: white;
+            width: 100%;
+            max-width: 800px;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 10px 40px -10px rgba(0,0,0,0.1);
+        }
+        .demo-header {
+            text-align: center;
+            margin-bottom: 40px;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 20px;
+        }
+        .demo-header h1 {
+            color: var(--text-main);
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+        .demo-header p {
+            color: #64748b;
+        }
+        
+        .file-group {
+            margin-bottom: 30px;
+        }
+        .group-title {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #94a3b8;
+            font-weight: 700;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .file-list {
+            list-style: none;
+            padding: 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 15px;
+        }
+        
+        .file-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px;
+            background: #f1f5f9;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            text-decoration: none;
+            color: var(--text-main);
+            font-weight: 500;
+            font-family: monospace; /* Dosya ismi hissi için */
+            transition: all 0.3s ease;
+        }
+
+        .file-link:hover {
+            background: white;
+            border-color: var(--primary);
+            color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.1);
+        }
+
+        .file-link i {
+            width: 18px;
+            height: 18px;
+            color: #94a3b8;
+        }
+        .file-link:hover i {
+            color: var(--primary);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="demo-container">
+        <div class="demo-header">
+            <h1>Proje Dosya İndeksi</h1>
+            <p>Oluşturulan tüm HTML sayfalarına hızlı erişim listesi.</p>
+        </div>
+
+        <div class="file-group">
+            <div class="group-title">
+                <i data-lucide="layout"></i> Ana Sayfalar
+            </div>
+            <ul class="file-list">
+                <li><a href="index.html" class="file-link"><i data-lucide="file-code"></i> index.html</a></li>
+                <li><a href="hakkimizda.html" class="file-link"><i data-lucide="file-code"></i> hakkimizda.html</a></li>
+                <li><a href="hizmetler.html" class="file-link"><i data-lucide="file-code"></i> hizmetler.html</a></li>
+                <li><a href="iletisim.html" class="file-link"><i data-lucide="file-code"></i> iletisim.html</a></li>
+                <li><a href="is-birligi.html" class="file-link"><i data-lucide="file-code"></i> is-birligi.html</a></li>
+            </ul>
+        </div>
+
+        <div class="file-group">
+            <div class="group-title">
+                <i data-lucide="folder-open"></i> Hizmet Detayları
+            </div>
+            <ul class="file-list">
+                <li><a href="iklim.html" class="file-link"><i data-lucide="file-text"></i> iklim.html</a></li>
+                <li><a href="karbon.html" class="file-link"><i data-lucide="file-text"></i> karbon.html</a></li>
+                <li><a href="su.html" class="file-link"><i data-lucide="file-text"></i> su.html</a></li>
+                <li><a href="enerji.html" class="file-link"><i data-lucide="file-text"></i> enerji.html</a></li>
+                <li><a href="verimlilik.html" class="file-link"><i data-lucide="file-text"></i> verimlilik.html</a></li>
+                <li><a href="sehir.html" class="file-link"><i data-lucide="file-text"></i> sehir.html</a></li>
+                <li><a href="hava.html" class="file-link"><i data-lucide="file-text"></i> hava.html</a></li>
+                <li><a href="arsiv.html" class="file-link"><i data-lucide="file-text"></i> arsiv.html</a></li>
+                <li><a href="esg.html" class="file-link"><i data-lucide="file-text"></i> esg.html</a></li>
+            </ul>
+        </div>
+
+        <div class="file-group">
+            <div class="group-title">
+                <i data-lucide="shield-check"></i> Kurumsal & Yasal
+            </div>
+            <ul class="file-list">
+                <li><a href="kamu.html" class="file-link"><i data-lucide="landmark"></i> kamu.html</a></li>
+                <li><a href="ozel.html" class="file-link"><i data-lucide="briefcase"></i> ozel.html</a></li>
+                <li><a href="yol-haritasi.html" class="file-link"><i data-lucide="map"></i> yol-haritasi.html</a></li>
+                <li><a href="kvkk.html" class="file-link"><i data-lucide="lock"></i> kvkk.html</a></li>
+                <li><a href="sss.html" class="file-link"><i data-lucide="help-circle"></i> sss.html</a></li>
+            </ul>
+        </div>
+
+        <div style="text-align: center; margin-top: 40px; font-size: 0.9rem; color: #cbd5e1;">
+            Toplam 19 HTML Dosyası Listelendi
+        </div>
+
+    </div>
+
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>
