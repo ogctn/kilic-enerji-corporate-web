@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="style.css">
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        /* BU SAYFAYA ÖZEL TASARIM (TIMELINE) */
         .roadmap-section { padding: 80px 0; background: #fff; }
         .timeline { position: relative; max-width: 1000px; margin: 0 auto; }
         .timeline::after {
@@ -33,7 +32,6 @@
         .right::after { left: -13px; }
         .content { padding: 20px 30px; background-color: #f8fafc; position: relative; border-radius: 12px; border: 1px solid #cbd5e1; }
         
-        /* Görsel Alanları */
         .visual-box {
             width: 100%; height: 200px; background: #e2e8f0; margin-top: 15px; border-radius: 8px; 
             display: flex; align-items: center; justify-content: center; overflow: hidden;
@@ -52,43 +50,8 @@
 </head>
 <body>
 
-    
-    <nav class="navbar">
-        <div class="container">
-            <div class="logo-container">
-                <a href="index.html">
-                    <img src="assets/img/logos/logo.png" alt="Logo" class="logo-img">
-                </a>
-            </div>
+    <div id="navbar-placeholder"></div>
 
-            <ul class="nav-links">
-                <li><a href="index.html">Anasayfa</a></li>
-                <li><a href="hakkimizda.html">Hakkımızda</a></li>
-                
-                <li class="dropdown-parent">
-                    <a href="hizmetler.html" class="active">Hizmetler ▾</a>
-                    <ul class="dropdown">
-                        <li><a href="iklim.html">İklim Kanunu</a></li>
-                        <li><a href="karbon.html">Karbon Ayak İzi</a></li>
-                        <li><a href="su.html">Su Ayak İzi</a></li>
-                        <li><a href="enerji.html">Sürdürülebilir Enerji</a></li>
-                        <li><a href="verimlilik.html">Enerji Verimliliği</a></li>
-                        <li><a href="sehir.html">Akıllı Şehircilik</a></li>
-                        <li><a href="hava.html">Hava Kalitesi</a></li>
-                        <li><a href="arsiv.html">Dijital Arşivleme</a></li>
-                        <li><a href="yol-haritasi.html">Kurumsal Yol Haritası</a></li>
-                    </ul>
-                </li>
-                
-                <li><a href="is-birligi.html">İş Birliği</a></li>
-                <li><a href="iletisim.html" class="btn-cta">İletişim</a></li>
-            </ul>
-
-            <div class="menu-toggle">
-                <i data-lucide="menu"></i>
-            </div>
-        </div>
-    </nav>
 
     <div class="page-header-simple">
         <div class="container">
@@ -162,10 +125,14 @@
 
         </div>
 
-        <div class="container" style="margin-top: 80px; text-align: center;">
-            <a href="iletisim.html" class="btn-detail-link" style="font-size: 1.2rem;">
-                Kurumunuza Özel Yol Haritası İsteyin <i data-lucide="arrow-right"></i>
-            </a>
+        <div class="mv-block" style="margin-top: 60px;">
+            <div class="mv-header">
+                <h3 class="mv-title">Kılıç Enerji Çözümü</h3>
+            </div>
+            <p class="mv-desc">
+                
+            </p>
+            <a href="iletisim.html" class="btn-detail-link"> Teklif Alın <i data-lucide="arrow-right"></i></a>
         </div>
     </section>
 

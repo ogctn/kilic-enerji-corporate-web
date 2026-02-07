@@ -11,42 +11,8 @@
 <body>
 
     
-    <nav class="navbar">
-        <div class="container">
-            <div class="logo-container">
-                <a href="index.html">
-                    <img src="assets/img/logos/logo.png" alt="Logo" class="logo-img">
-                </a>
-            </div>
+    <div id="navbar-placeholder"></div>
 
-            <ul class="nav-links">
-                <li><a href="index.html">Anasayfa</a></li>
-                <li><a href="hakkimizda.html">Hakkımızda</a></li>
-                
-                <li class="dropdown-parent">
-                    <a href="hizmetler.html" class="active">Hizmetler ▾</a>
-                    <ul class="dropdown">
-                        <li><a href="iklim.html">İklim Kanunu</a></li>
-                        <li><a href="karbon.html">Karbon Ayak İzi</a></li>
-                        <li><a href="su.html">Su Ayak İzi</a></li>
-                        <li><a href="enerji.html">Sürdürülebilir Enerji</a></li>
-                        <li><a href="verimlilik.html">Enerji Verimliliği</a></li>
-                        <li><a href="sehir.html">Akıllı Şehircilik</a></li>
-                        <li><a href="hava.html">Hava Kalitesi</a></li>
-                        <li><a href="arsiv.html">Dijital Arşivleme</a></li>
-                        <li><a href="yol-haritasi.html">Kurumsal Yol Haritası</a></li>
-                    </ul>
-                </li>
-                
-                <li><a href="is-birligi.html">İş Birliği</a></li>
-                <li><a href="iletisim.html" class="btn-cta">İletişim</a></li>
-            </ul>
-
-            <div class="menu-toggle">
-                <i data-lucide="menu"></i>
-            </div>
-        </div>
-    </nav>
 
     <header class="page-hero">
         <img src="assets/img/hero-bg.jpg" alt="Hizmetler" class="hero-bg">
@@ -64,10 +30,11 @@
         </div>
     </header>
 
+
     <section class="services-accordion-section">
         <div class="container" style="max-width: 1000px;">
             
-            <div class="accordion-item" id="iklim">
+            <div class="accordion-item" id="iklim-kanunu">
                 <button class="accordion-header">
                     <div class="header-left">
                         <i data-lucide="scale" class="acc-icon"></i>
@@ -87,14 +54,14 @@
                             <li>SKDM (Sınırda Karbon Düzenleme) Raporlaması</li>
                             <li>Yasal Sorumluluk ve Yönetici Bilgi Notları Hazırlama</li>
                         </ul>
-                        <a href="iklim.html" class="btn-detail-link">
+                        <a href="iklim-kanunu.html" class="btn-detail-link">
                             Detaylı Bilgi Al <i data-lucide="arrow-right"></i>
                         </a>
                     </div>
                 </div>
             </div>
 
-            <div class="accordion-item" id="karbon">
+            <div class="accordion-item" id="karbon-ayak-izi">
                 <button class="accordion-header">
                     <div class="header-left">
                         <i data-lucide="footprints" class="acc-icon"></i>
@@ -114,14 +81,14 @@
                             <li>Kapsam 1 (Doğrudan), Kapsam 2 (Enerji) ve Kapsam 3 (Tedarik) Analizi</li>
                             <li>SBTi (Bilim Temelli Hedefler) Azaltım Stratejisi</li>
                         </ul>
-                        <a href="karbon.html" class="btn-detail-link">
+                        <a href="karbon-ayak-izi.html" class="btn-detail-link">
                             Detaylı Bilgi Al <i data-lucide="arrow-right"></i>
                         </a>
                     </div>
                 </div>
             </div>
 
-            <div class="accordion-item" id="su">
+            <div class="accordion-item" id="su-ayak-izi">
                 <button class="accordion-header">
                     <div class="header-left">
                         <i data-lucide="droplets" class="acc-icon"></i>
@@ -141,14 +108,14 @@
                             <li>Endüstriyel Su Risk ve Kısıt Analizi</li>
                             <li>Gri Su Geri Kazanım ve Yağmur Suyu Hasadı Projeleri</li>
                         </ul>
-                        <a href="su.html" class="btn-detail-link">
+                        <a href="su-ayak-izi.html" class="btn-detail-link">
                             Detaylı Bilgi Al <i data-lucide="arrow-right"></i>
                         </a>
                     </div>
                 </div>
             </div>
 
-            <div class="accordion-item" id="verimlilik">
+            <div class="accordion-item" id="enerji-verimliligi">
                 <button class="accordion-header">
                     <div class="header-left">
                         <i data-lucide="trending-down" class="acc-icon"></i>
@@ -170,14 +137,14 @@
                             <li><strong>Binalarda Enerji Performansı (BEP):</strong> Yeni binalar için Enerji Kimlik Belgesi (EKB) ve yalıtım standartları.</li>
                             <li><strong>ISO 50001:</strong> Enerji Yönetim Sistemi kurulumu ve belgelendirme danışmanlığı.</li>
                         </ul>
-                        <a href="verimlilik.html" class="btn-detail-link">
+                        <a href="enerji-verimliligi.html" class="btn-detail-link">
                             Detaylı Bilgi Al <i data-lucide="arrow-right"></i>
                         </a>
                     </div>
                 </div>
             </div>
 
-            <div class="accordion-item" id="enerji">
+            <div class="accordion-item" id="surdurulebilir-enerji">
                 <button class="accordion-header">
                     <div class="header-left">
                         <i data-lucide="zap" class="acc-icon"></i>
@@ -197,7 +164,7 @@
                             <li>Enerji Verimliliği Etütleri ve Fizibilite</li>
                             <li>Lisanssız Elektrik Üretim Yönetmeliği Danışmanlığı</li>
                         </ul>
-                        <a href="enerji.html" class="btn-detail-link">
+                        <a href="surdurulebilir-enerji.html" class="btn-detail-link">
                             Detaylı Bilgi Al <i data-lucide="arrow-right"></i>
                         </a>
                     </div>
@@ -231,7 +198,7 @@
                 </div>
             </div>
 
-            <div class="accordion-item" id="sehir">
+            <div class="accordion-item" id="akilli-sehir">
                 <button class="accordion-header">
                     <div class="header-left">
                         <i data-lucide="building-2" class="acc-icon"></i>
@@ -251,14 +218,14 @@
                             <li>Akıllı Atık Yönetimi ve Rota Optimizasyonu</li>
                             <li>Şehir İzleme ve Veri Merkezi Kurulumu</li>
                         </ul>
-                        <a href="sehir.html" class="btn-detail-link">
+                        <a href="akilli-sehir.html" class="btn-detail-link">
                             Detaylı Bilgi Al <i data-lucide="arrow-right"></i>
                         </a>
                     </div>
                 </div>
             </div>
 
-            <div class="accordion-item" id="hava">
+            <div class="accordion-item" id="hava-kalitesi">
                 <button class="accordion-header">
                     <div class="header-left">
                         <i data-lucide="wind" class="acc-icon"></i>
@@ -278,14 +245,14 @@
                             <li>Hava Kirliliği Dağılım Modellemesi (AERMOD)</li>
                             <li>Endüstriyel Filtrasyon Çözümleri</li>
                         </ul>
-                        <a href="hava.html" class="btn-detail-link">
+                        <a href="hava-kalitesi.html" class="btn-detail-link">
                             Detaylı Bilgi Al <i data-lucide="arrow-right"></i>
                         </a>
                     </div>
                 </div>
             </div>
             
-                        <div class="accordion-item" id="arsiv">
+            <div class="accordion-item" id="dijital-arsivleme">
                 <button class="accordion-header">
                     <div class="header-left">
                         <i data-lucide="database" class="acc-icon"></i>
@@ -304,7 +271,7 @@
                             <li>Yüksek Hızlı Tarama ve OCR</li>
                             <li>Doküman Yönetim Sistemi (DYS) Entegrasyonu</li>
                         </ul>
-                        <a href="arsiv.html" class="btn-detail-link">
+                        <a href="dijital-arsivleme.html" class="btn-detail-link">
                             Detaylı Bilgi Al <i data-lucide="arrow-right"></i>
                         </a>
                     </div>
@@ -316,7 +283,7 @@
                 <p>Kamu ve özel sektör için özelleştirilmiş çözüm paketlerimiz.</p>
             </div>
 
-            <div class="accordion-item" id="kamu" style="border-left: 5px solid var(--secondary);">
+            <div class="accordion-item" id="kamu-hizmetleri" style="border-left: 5px solid var(--secondary);">
                 <button class="accordion-header">
                     <div class="header-left">
                         <i data-lucide="landmark" class="acc-icon"></i>
@@ -336,14 +303,14 @@
                             <li>Kamu Binaları Enerji Verimliliği Etütleri</li>
                             <li>Mevzuat Uyum Denetimi ve Raporlama</li>
                         </ul>
-                        <a href="kamu.html" class="btn-detail-link">
+                        <a href="kamu-hizmetleri.html" class="btn-detail-link">
                             Detaylı Bilgi Al <i data-lucide="arrow-right"></i>
                         </a>
                     </div>
                 </div>
             </div>
 
-            <div class="accordion-item" id="ozel" style="border-left: 5px solid var(--primary);">
+            <div class="accordion-item" id="ozel-sektor" style="border-left: 5px solid var(--primary);">
                 <button class="accordion-header">
                     <div class="header-left">
                         <i data-lucide="briefcase" class="acc-icon"></i>
@@ -363,7 +330,7 @@
                             <li>ISO 50001, ISO 14064 ve ISO 14046 Belgelendirme Danışmanlığı</li>
                             <li>Yeşil Finansman ve Hibe Projeleri Yazımı</li>
                         </ul>
-                        <a href="ozel.html" class="btn-detail-link">
+                        <a href="ozel-sektor.html" class="btn-detail-link">
                             Detaylı Bilgi Al <i data-lucide="arrow-right"></i>
                         </a>
                     </div>
@@ -373,54 +340,9 @@
         </div>
     </section>
 
-    <footer id="footer">
-        <div class="container footer-container">
-            <div class="footer-grid">
-                <div class="footer-col">
-                    <div class="footer-logo">
-                        <img src="assets/img/logos/logo.png" alt="Kılıç Enerji Logo">
-                    </div>
-                    <p class="footer-desc">
-                        Gelecek nesillere yaşanabilir bir dünya bırakmak için sürdürülebilir enerji ve dijital dönüşüm çözümleri üretiyoruz.
-                    </p>
-                </div>
+    
+    <div id="footer-placeholder"></div>
 
-                <div class="footer-col">
-                    <h4>Kurumsal</h4>
-                    <ul class="footer-links">
-                        <li><a href="index.html">Anasayfa</a></li>
-                        <li><a href="hakkimizda.html">Hakkımızda</a></li>
-                        <li><a href="is-birligi.html">İş Birliği & Çözüm Ortakları</a></li>
-                        <li><a href="sss.html">S.S.S.</a> </li>
-                        <li><a href="kvkk.html">KVKK & Gizlilik</a> </li>
-                    </ul>
-                </div>
-
-                <div class="footer-col">
-                    <h4>Hizmetler</h4>
-                    <ul class="footer-links">
-                        <li><a href="iklim.html">İklim Kanunu</a></li>
-                        <li><a href="karbon.html">Karbon Ayak İzi</a></li>
-                        <li><a href="enerji.html">Sürdürülebilir Enerji</a></li>
-                        <li><a href="sehir.html">Akıllı Şehircilik</a></li>
-                    </ul>
-                </div>
-
-                <div class="footer-col">
-                    <h4>Bize Ulaşın</h4>
-                    <ul class="contact-list">
-                        <li><i data-lucide="map-pin"></i> <span>İsmet Kaplan Mahallesi Şair Eşref Bulvarı Altay İş Merkezi No: 18, İzmir</span></li>
-                        <li><i data-lucide="mail"></i> <span>bilgi@bilalkilicenerji.com</span></li>
-                        <li><i data-lucide="phone"></i> <span>+90 554 580 00 01</span></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2026 Kılıç Enerji Danışmanlık A.Ş. Tüm hakları saklıdır.</p>
-            </div>
-        </div>
-    </footer>
-
-    <script src="script.js"></script>
+    <script src="script.js" defer></script>
 </body>
 </html>

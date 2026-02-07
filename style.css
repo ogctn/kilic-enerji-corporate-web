@@ -145,7 +145,7 @@ img { max-width: 100%; display: block; }
     border-radius: 12px; 
     padding: 10px;
     opacity: 0; visibility: hidden; 
-    transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+    transition: opacity 0.3s cubic-bezier(0.165, 0.84, 0.44, 1), transform 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
     z-index: 1100;
 }
 
@@ -207,6 +207,11 @@ img { max-width: 100%; display: block; }
     object-fit: cover; z-index: 1; opacity: 1; 
 }
 
+.hero .hero-bg {
+    animation: slowZoom 20s infinite alternate;
+}
+
+
 /* Katman 2: Perde (Overlay) - HAFİFLETİLDİ */
 .hero-overlay {
     position: absolute; top: 0; left: 0; width: 100%; height: 100%;
@@ -258,7 +263,7 @@ img { max-width: 100%; display: block; }
     color: white; font-weight: 700; font-size: 1.1rem;
     border-radius: 50px; text-decoration: none;
     box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-    transition: all 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease, background-color 0.3s ease;
     border: 2px solid transparent;
     margin-top: 10px;
 }
@@ -338,6 +343,7 @@ img { max-width: 100%; display: block; }
     padding: 1rem;
     display: flex; flex-direction: column; 
     align-items: center; justify-content: center; text-align: center;
+    text-decoration: none; color: inherit;
     position: relative; 
     overflow: hidden; 
     cursor: pointer;
@@ -440,7 +446,7 @@ footer {
 }
 
 .footer-links li { margin-bottom: 12px; }
-.footer-links a { color: #94a3b8; transition: all 0.3s; display: inline-block; }
+.footer-links a { color: #94a3b8; transition: color 0.3s ease, transform 0.3s ease; display: inline-block; }
 .footer-links a:hover { color: var(--secondary); transform: translateX(5px); }
 
 .contact-list li { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 15px; font-size: 0.95rem; }
@@ -451,20 +457,30 @@ footer {
     padding-top: 30px; font-size: 0.9rem; color: #64748b;
 }
 
-.page-hero {
-    height: 60vh;
+.page-hero {    
+    height: 60vh; 
+    width: 100%;
     position: relative;
     display: flex; align-items: center; justify-content: center; text-align: center;
     overflow: hidden;
+    padding-top: 80px;
     background-color: #0f172a; 
     isolation: isolate;
-    scroll-snap-align: start; scroll-snap-stop: always;
 }
 
 .page-hero .hero-bg { animation: slowZoom 20s infinite alternate; }
 @keyframes slowZoom {
     0% { transform: scale(1); }
     100% { transform: scale(1.5); }
+}
+
+.home-scroll .page-hero {
+    scroll-snap-align: none;
+    scroll-snap-stop: normal;
+}
+
+@media (max-width: 900px) {
+    .page-hero { height: 100vh; }
 }
 
 /* --- HAKKIMIZDA SAYFASI --- */
@@ -491,7 +507,7 @@ footer {
     will-change: transform, background;
 }
 
-.content-wrapper { position: relative; z-index: 2; max-width: 1000px; margin: 0 auto; padding: 0 25px; box-sizing: border-box; }
+.content-wrapper { position: relative; z-index: 2; max-width: 1000px; margin: 0 auto; padding: 0 25px;}
 
 .premium-title {
     font-size: 2.5rem; font-weight: 800;
@@ -517,61 +533,12 @@ footer {
 .clean-card h3 { font-size: 1.2rem; font-weight: 700; color: #0f172a; margin: 15px 0 10px; }
 .clean-card p { font-size: 0.95rem; color: #64748b; line-height: 1.5; }
 
-.mv-block { margin-bottom: 60px; padding-left: 30px; border-left: 4px solid #cbd5e1; transition: all 0.3s ease; }
+.mv-block { margin-bottom: 60px; padding-left: 30px; border-left: 4px solid #cbd5e1; transition: border-left-color 0.3s ease; }
 .mv-block:hover { border-left-color: var(--primary); }
 .mv-header { display: flex; align-items: center; gap: 15px; margin-bottom: 15px; }
-.mv-icon { color: var(--primary); width: 28px; height: 28px; }
 .mv-title { font-size: 1.8rem; font-weight: 700; color: color-mix(in srgb, var(--color-blue) var(--mix-ratio), var(--color-green)); margin: 0; }
 .mv-desc { font-size: 1.1rem; line-height: 1.8; color: #475569; }
 
-/* HAKKIMIZDA (LOGO+TEXT WRAPPER) */
-.about-intro-wrapper {
-    display: flex;
-    flex-direction: row;
-    align-items: stretch;
-    gap: 40px;
-    margin-bottom: 40px;
-}
-
-.intro-logo-box {
-    flex: 0 0 30%;
-    max-width: 300px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-}
-
-.intro-logo-box img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    filter: drop-shadow(0 10px 20px rgba(0,0,0,0.1));
-}
-
-.intro-text-box {
-    flex: 1;
-    display: flex;
-    align-items: center;
-}
-
-.intro-text-box p {
-    margin-bottom: 0;
-}
-
-@media (max-width: 768px) {
-    .about-intro-wrapper {
-        flex-direction: column;
-        text-align: center;
-    }
-
-    .intro-logo-box {
-        flex: none;
-        width: 180px;
-        height: 180px;
-        margin: 0 auto 20px;
-    }
-}
 
 /* --- HİZMETLER SAYFASI (AKORDİYON) --- */
 .services-accordion-section {
@@ -592,7 +559,7 @@ footer {
     border-radius: 12px;
     margin-bottom: 20px;
     overflow: hidden;
-    transition: all 0.3s ease;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
     box-shadow: 0 4px 6px rgba(0,0,0,0.02);
     scroll-margin-top: 110px; 
 }
@@ -631,6 +598,20 @@ footer {
 
 /* --- MOBİL UYUMLULUK (MENÜ VE GENEL AYARLAR) --- */
 @media (max-width: 900px) {
+    body { background-attachment: scroll; animation: none; }
+
+    /* Mobilde scroll-snap kapalı (touch UX + jank azaltma) */
+    html.home-scroll { scroll-snap-type: none; }
+    .home-scroll .hero,
+    .home-scroll #hizmetler-vitrini,
+    .home-scroll footer {
+        scroll-snap-align: none;
+        scroll-snap-stop: normal;
+    }
+
+    /* Mobilde canvas katmanı dokunmayı engellemesin */
+    #tsparticles { pointer-events: none; }
+
     /* Navbar Menü Mantığı */
     .menu-toggle { display: block; font-size: 1.8rem; }
     
@@ -672,8 +653,6 @@ footer {
     .footer-logo, .contact-list li { justify-content: center; }
     .footer-col h4::after { left: 50%; transform: translateX(-50%); }
     .footer-bottom { flex-direction: column; gap: 20px; text-align: center; }
-    
-    .premium-stats { flex-direction: column; gap: 30px; align-items: center; }
     .services-grid-clean { grid-template-columns: 1fr; }
     .premium-title { font-size: 2rem; }
     .content-wrapper { padding: 0 20px; }
@@ -771,9 +750,6 @@ footer {
     .partnership-header {
         flex-direction: column;
     }
-    .partnership-icon {
-        transform: rotate(90deg);
-    }
 }
 
 /* --- ÇÖZÜM ORTAKLARI SLIDER (LOGO BANDI) --- */
@@ -818,7 +794,7 @@ footer {
     
     /* Logolar varsayılan olarak gri olsun */
     filter: grayscale(100%) opacity(0.7); 
-    transition: all 0.3s ease;
+    transition: filter 0.3s ease, transform 0.3s ease;
     cursor: pointer;
 }
 
@@ -921,15 +897,6 @@ footer {
 .info-text h4 { margin: 0 0 5px 0; font-size: 1.1rem; color: #0f172a; }
 .info-text p { margin: 0; color: #64748b; font-size: 0.95rem; line-height: 1.5; }
 
-/* Harita */
-.map-container {
-    width: 100%;
-    height: 300px;
-    border-radius: 16px;
-    overflow: hidden;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-    border: 1px solid #e2e8f0;
-}
 
 /* 2. SAĞ TARA (FORM) */
 .contact-form-side {
@@ -976,7 +943,7 @@ footer {
     font-size: 1rem;
     color: #1e293b;
     background: #f8fafc;
-    transition: all 0.3s ease;
+    transition: border-color 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 /* Textarea ikonsuz */
@@ -1059,7 +1026,7 @@ footer {
     color: var(--primary);
     text-decoration: none;
     font-size: 1rem;
-    transition: all 0.3s ease;
+    transition: color 0.3s ease, transform 0.3s ease, border-color 0.3s ease;
     border-bottom: 2px solid transparent;
 }
 
@@ -1122,4 +1089,24 @@ footer {
     .nav-links.active {
         right: 0;
     }
+}
+
+
+/* --- ACCESSIBILITY: HAREKET AZALTMA --- */
+@media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    body { animation: none; }
+    *, *::before, *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+
+/* Mobil tarayıcılarda 100vh sapmalarını azalt */
+@supports (height: 100svh) {
+    .hero { height: 100svh; }
+    .page-hero { height: 60svh; }
 }
