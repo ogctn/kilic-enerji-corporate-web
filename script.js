@@ -25,6 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   async function loadSharedLayout() {
+    await injectPartial('header-placeholder', 'partials/header.html');
     await injectPartial('navbar-placeholder', 'partials/navbar.html');
     await injectPartial('footer-placeholder', 'partials/footer.html');
   }
@@ -38,26 +39,48 @@ document.addEventListener('DOMContentLoaded', () => {
     return file || 'index.html';
   }
 
+  function getFileNameFromHref(href) {
+    if (!href) return '';
+
+    try {
+      const parsed = new URL(href, window.location.origin);
+      const file = (parsed.pathname.split('/').pop() || '').trim();
+      return (file || 'index.html').toLowerCase();
+    } catch (_) {
+      const cleanHref = href.split('#')[0].split('?')[0].trim();
+      const file = (cleanHref.split('/').pop() || '').trim();
+      return (file || 'index.html').toLowerCase();
+    }
+  }
+
   function setActiveNavLink() {
     const nav = document.querySelector('.navbar');
     if (!nav) return;
 
     const currentFile = getCurrentFileName().toLowerCase();
     const links = Array.from(nav.querySelectorAll('a[href]'));
-    links.forEach(a => a.classList.remove('active'));
+    links.forEach(a => {
+      a.classList.remove('active');
+      a.removeAttribute('aria-current');
+    });
 
-    const exact = links.find(a => (a.getAttribute('href') || '').toLowerCase() === currentFile);
+    const exact = links.find(a => getFileNameFromHref(a.getAttribute('href') || '') === currentFile);
     if (exact) {
       exact.classList.add('active');
+      exact.setAttribute('aria-current', 'page');
       return;
     }
 
     const dropdownLinks = Array.from(nav.querySelectorAll('.dropdown a[href]'));
-    const match = dropdownLinks.find(a => (a.getAttribute('href') || '').toLowerCase() === currentFile);
+    const match = dropdownLinks.find(a => getFileNameFromHref(a.getAttribute('href') || '') === currentFile);
     if (match) {
       match.classList.add('active');
+      match.setAttribute('aria-current', 'page');
       const parent = nav.querySelector('.dropdown-parent > a');
-      if (parent) parent.classList.add('active');
+      if (parent) {
+        parent.classList.add('active');
+        parent.setAttribute('aria-current', 'page');
+      }
     }
   }
 
@@ -73,6 +96,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const closeMobileMenu = () => {
       if (navLinks) navLinks.classList.remove('active');
+      if (menuBtn) menuBtn.setAttribute('aria-expanded', 'false');
       closeAllDropdowns();
     };
 
@@ -107,7 +131,10 @@ document.addEventListener('DOMContentLoaded', () => {
     if (menuBtn && navLinks) {
       menuBtn.addEventListener('click', () => {
         navLinks.classList.toggle('active');
-        if (!navLinks.classList.contains('active')) closeAllDropdowns();
+        const expanded = navLinks.classList.contains('active');
+        menuBtn.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+        if (!expanded) 
+          closeAllDropdowns();
       });
     }
 
@@ -299,6 +326,72 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+
+  function initMobileLogosManualLoop() {
+    const tracks = Array.from(document.querySelectorAll('.logos-slide-track'));
+    if (!tracks.length) return;
+
+    const mq = window.matchMedia('(max-width: 768px)');
+    const cleanups = [];
+
+    tracks.forEach(track => {
+      let syncing = false;
+
+      const syncLoopPosition = () => {
+        if (!mq.matches) return;
+        const half = track.scrollWidth / 2;
+        if (!half || !Number.isFinite(half)) return;
+
+        const threshold = 24;
+        if (track.scrollLeft <= threshold) {
+          syncing = true;
+          track.scrollLeft += half;
+          syncing = false;
+          return;
+        }
+
+        const maxScroll = track.scrollWidth - track.clientWidth;
+        if (track.scrollLeft >= maxScroll - threshold) {
+          syncing = true;
+          track.scrollLeft -= half;
+          syncing = false;
+        }
+      };
+
+      const primeLoop = () => {
+        if (!mq.matches) return;
+        const half = track.scrollWidth / 2;
+        if (!half || !Number.isFinite(half)) return;
+        track.scrollLeft = half;
+      };
+
+      const onScroll = () => {
+        if (syncing) return;
+        syncLoopPosition();
+      };
+
+      const onModeChange = e => {
+        if (e.matches) primeLoop();
+        else track.scrollLeft = 0;
+      };
+
+      track.addEventListener('scroll', onScroll, { passive: true });
+      if (mq.addEventListener) mq.addEventListener('change', onModeChange);
+      else mq.addListener(onModeChange);
+
+      requestAnimationFrame(primeLoop);
+
+      cleanups.push(() => {
+        track.removeEventListener('scroll', onScroll);
+        if (mq.removeEventListener) mq.removeEventListener('change', onModeChange);
+        else mq.removeListener(onModeChange);
+      });
+    });
+
+    window.addEventListener('beforeunload', () => cleanups.forEach(fn => fn()), { once: true });
+  }
+
+
   function initScrollSnap() {
     const htmlEl = document.documentElement;
     if (prefersReducedMotion() || isTouch() || isMobile()) {
@@ -317,6 +410,70 @@ document.addEventListener('DOMContentLoaded', () => {
       { threshold: 0.1 }
     );
     obs.observe(hero);
+  }
+
+   function initMobileLogosManualLoop() {
+    const tracks = Array.from(document.querySelectorAll('.logos-slide-track'));
+    if (!tracks.length) return;
+
+    const mq = window.matchMedia('(max-width: 768px)');
+    const cleanups = [];
+
+    tracks.forEach(track => {
+      let syncing = false;
+
+      const syncLoopPosition = () => {
+        if (!mq.matches) return;
+        const half = track.scrollWidth / 2;
+        if (!half || !Number.isFinite(half)) return;
+
+        const threshold = 24;
+        if (track.scrollLeft <= threshold) {
+          syncing = true;
+          track.scrollLeft += half;
+          syncing = false;
+          return;
+        }
+
+        const maxScroll = track.scrollWidth - track.clientWidth;
+        if (track.scrollLeft >= maxScroll - threshold) {
+          syncing = true;
+          track.scrollLeft -= half;
+          syncing = false;
+        }
+      };
+
+      const primeLoop = () => {
+        if (!mq.matches) return;
+        const half = track.scrollWidth / 2;
+        if (!half || !Number.isFinite(half)) return;
+        track.scrollLeft = half;
+      };
+
+      const onScroll = () => {
+        if (syncing) return;
+        syncLoopPosition();
+      };
+
+      const onModeChange = e => {
+        if (e.matches) primeLoop();
+        else track.scrollLeft = 0;
+      };
+
+      track.addEventListener('scroll', onScroll, { passive: true });
+      if (mq.addEventListener) mq.addEventListener('change', onModeChange);
+      else mq.addListener(onModeChange);
+
+      requestAnimationFrame(primeLoop);
+
+      cleanups.push(() => {
+        track.removeEventListener('scroll', onScroll);
+        if (mq.removeEventListener) mq.removeEventListener('change', onModeChange);
+        else mq.removeListener(onModeChange);
+      });
+    });
+
+    window.addEventListener('beforeunload', () => cleanups.forEach(fn => fn()), { once: true });
   }
 
   function rememberInternalNavigation() {
@@ -349,6 +506,43 @@ document.addEventListener('DOMContentLoaded', () => {
     );
   }
 
+  function initContactMapSwitcher() {
+      const mapSection = document.getElementById('contact-map-section');
+      const mapFrame = document.getElementById('contact-map-iframe');
+      const mapTitle = document.getElementById('map-title');
+      const mapDescription = document.getElementById('map-description');
+      const switchLinks = Array.from(document.querySelectorAll('.map-switch-link'));
+
+      if (!mapSection || !mapFrame || !mapTitle || !mapDescription || !switchLinks.length) return;
+
+      const setMapFromCard = card => {
+        if (!card) return;
+        const nextTitle = card.getAttribute('data-map-title') || '';
+        const nextDescription = card.getAttribute('data-map-description') || '';
+        const nextSrc = card.getAttribute('data-map-src') || '';
+
+        if (nextTitle) mapTitle.textContent = nextTitle;
+        if (nextDescription) mapDescription.textContent = nextDescription;
+        if (nextSrc && mapFrame.getAttribute('src') !== nextSrc) mapFrame.setAttribute('src', nextSrc);
+
+        document.querySelectorAll('.office-card.is-active').forEach(el => el.classList.remove('is-active'));
+        card.classList.add('is-active');
+      };
+
+      const defaultCard = document.querySelector('.office-card');
+      if (defaultCard) setMapFromCard(defaultCard);
+
+      switchLinks.forEach(link => {
+        link.addEventListener('click', e => {
+          e.preventDefault();
+          const card = link.closest('.office-card');
+          if (!card) return;
+          setMapFromCard(card);
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+      });
+  }
+
   function getServiceBackHrefFromCurrent() {
     const currentFile = getCurrentFileName().toLowerCase();
     if (!currentFile.endsWith('.html')) return null;
@@ -377,16 +571,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const isPartners = current === 'is-birligi.html' || current === 'is-birligi';
     if (!isHome && !isPartners) return;
 
-    const storageKey = 'ke_info_modal_hide';
-
-    let shouldShow = true;
-    if (isHome) {
-      try {
-        shouldShow = localStorage.getItem(storageKey) !== '1';
-      } catch (_) {
-        shouldShow = true;
-      }
-    }
 
     const open = () => {
       modal.classList.add('is-open');
@@ -411,32 +595,65 @@ document.addEventListener('DOMContentLoaded', () => {
       if (e.key === 'Escape' && modal.classList.contains('is-open')) close();
     });
 
-    const dontShow =
-      document.getElementById('infoModalDontShow') || document.getElementById('infoModalNoMore');
+    setTimeout(open, 10);
+  }
 
-    if (isHome && dontShow) {
-      dontShow.addEventListener('change', () => {
-        try {
-          if (dontShow.checked) localStorage.setItem(storageKey, '1');
-          else localStorage.removeItem(storageKey);
-        } catch (_) {}
+  function initFooterContactLinks() {
+    const contactLinks = Array.from(document.querySelectorAll('.contact-link[data-contact]'));
+    if (!contactLinks.length) return;
+
+    const applyLinks = () => {
+      const mobile = isMobile();
+
+      contactLinks.forEach(link => {
+        const type = (link.getAttribute('data-contact') || '').trim();
+        const value = (link.getAttribute('data-value') || '').trim();
+
+        if (type === 'address') {
+          const desktopHref = link.getAttribute('data-desktop-href') || 'iletisim.html';
+          const mobileHref = link.getAttribute('data-mobile-href') || desktopHref;
+          link.setAttribute('href', mobile ? mobileHref : desktopHref);
+          link.setAttribute('target', mobile ? '_blank' : '_self');
+          if (mobile) link.setAttribute('rel', 'noopener noreferrer');
+          else link.removeAttribute('rel');
+          link.removeAttribute('aria-disabled');
+          link.classList.remove('is-disabled');
+          return;
+        }
+
+        if (mobile && type === 'phone' && value) {
+          link.setAttribute('href', `tel:${value.replace(/\s+/g, '')}`);
+          link.removeAttribute('aria-disabled');
+          link.classList.remove('is-disabled');
+          return;
+        }
+
+        if (mobile && type === 'email' && value) {
+          link.setAttribute('href', `mailto:${value}`);
+          link.removeAttribute('aria-disabled');
+          link.classList.remove('is-disabled');
+          return;
+        }
+
+        link.removeAttribute('href');
+        link.setAttribute('aria-disabled', 'true');
+        link.classList.add('is-disabled');
       });
-    }
+    };
 
-    if (shouldShow) setTimeout(open, 450);
+    applyLinks();
+    window.addEventListener('resize', applyLinks, { passive: true });
   }
 
   function shouldShowBackButton() {
     const currentFile = getCurrentFileName().toLowerCase();
 
     const exclude = new Set([
-      'index.html',
-      'hizmetler.html',
-      'hakkimizda.html',
-      'iletisim.html',
-      'is-birligi.html',
-      'kvkk.html',
-      'sss.html'
+      'index.html','index',
+      'hizmetler.html','hizmetler',
+      'hakkimizda.html','hakkimizda',
+      'iletisim.html','iletisim',
+      'is-birligi.html','is-birligi'
     ]);
 
     if (currentFile === 'esg.html') return true;
@@ -448,7 +665,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (file === currentFile) return true;
     }
 
-    if (!exclude.has(currentFile) && document.querySelector('.page-header-simple')) return true;
+    if (!exclude.has(currentFile)) return true;
     return false;
   }
 
@@ -476,6 +693,22 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!btn) return;
 
     btn.addEventListener('click', () => {
+      let hasInternalReferrer = false;
+      try {
+        if (document.referrer) {
+          const ref = new URL(document.referrer);
+          hasInternalReferrer =
+            ref.origin === window.location.origin &&
+            (ref.pathname !== window.location.pathname || ref.search !== window.location.search);
+        }
+      } catch (_) {
+        hasInternalReferrer = false;
+      }
+
+      if (hasInternalReferrer && window.history.length > 1) {
+        window.history.back();
+        return;
+      }
       const serviceHref = getServiceBackHrefFromCurrent();
       if (serviceHref) {
         window.location.href = serviceHref;
@@ -492,7 +725,8 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
       window.location.href = target;
-    });
+    }
+  );
   }
 
   async function bootstrap() {
@@ -500,14 +734,16 @@ document.addEventListener('DOMContentLoaded', () => {
     await loadSharedLayout();
     initLucide();
     initNavbar();
+    initFooterContactLinks();
     setActiveNavLink();
     initInfoModal();
     mountBackButton();
     initAccordion();
     initParticles();
     initPremiumMouseEffect();
+    initMobileLogosManualLoop();
     initScrollSnap();
+    initContactMapSwitcher();
   }
-
   bootstrap();
 });
