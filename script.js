@@ -25,7 +25,6 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   async function loadSharedLayout() {
-    await injectPartial('header-placeholder', 'partials/header.html');
     await injectPartial('navbar-placeholder', 'partials/navbar.html');
     await injectPartial('footer-placeholder', 'partials/footer.html');
   }
@@ -56,26 +55,29 @@ document.addEventListener('DOMContentLoaded', () => {
   function setActiveNavLink() {
     const nav = document.querySelector('.navbar');
     if (!nav) return;
-
-    const currentFile = getCurrentFileName().toLowerCase();
     const links = Array.from(nav.querySelectorAll('a[href]'));
+    const normalizeFileToken = value => {
+      if (!value) return 'index';
+      let v = String(value).toLowerCase().trim();
+      v = v.split('#')[0].split('?')[0];
+      v = v.split('/').filter(Boolean).pop() || 'index';
+      v = v.replace(/\.html$/i, '');
+      return v || 'index';
+    };
+    const currentToken = normalizeFileToken(getCurrentFileName());
     links.forEach(a => {
       a.classList.remove('active');
       a.removeAttribute('aria-current');
     });
-
-    const exact = links.find(a => getFileNameFromHref(a.getAttribute('href') || '') === currentFile);
-    if (exact) {
-      exact.classList.add('active');
-      exact.setAttribute('aria-current', 'page');
-      return;
-    }
-
-    const dropdownLinks = Array.from(nav.querySelectorAll('.dropdown a[href]'));
-    const match = dropdownLinks.find(a => getFileNameFromHref(a.getAttribute('href') || '') === currentFile);
-    if (match) {
-      match.classList.add('active');
-      match.setAttribute('aria-current', 'page');
+    const matched = links.find(a => {
+      const href = a.getAttribute('href') || '';
+      const hrefToken = normalizeFileToken(href);
+      return hrefToken === currentToken;
+    });
+    if (!matched) return;
+    matched.classList.add('active');
+    matched.setAttribute('aria-current', 'page');
+    if (matched.closest('.dropdown')) {
       const parent = nav.querySelector('.dropdown-parent > a');
       if (parent) {
         parent.classList.add('active');
@@ -147,6 +149,13 @@ document.addEventListener('DOMContentLoaded', () => {
       const parent = link.parentElement;
       const dropdown = parent ? parent.querySelector('.dropdown') : null;
       if (!dropdown) return;
+
+      const isAlreadyOpen = dropdown.classList.contains('open');
+      if (isAlreadyOpen) {
+        e.preventDefault();
+        closeAllDropdowns();
+        return;
+      }
 
       e.preventDefault();
 
@@ -325,7 +334,6 @@ document.addEventListener('DOMContentLoaded', () => {
       );
     });
   }
-
 
   function initMobileLogosManualLoop() {
     const tracks = Array.from(document.querySelectorAll('.logos-slide-track'));
@@ -571,20 +579,46 @@ document.addEventListener('DOMContentLoaded', () => {
     const isPartners = current === 'is-birligi.html' || current === 'is-birligi';
     if (!isHome && !isPartners) return;
 
+    const introGif = modal.querySelector('.modal-intro__gif');
+    let introTimer = null;
+
+    const clearIntroTimer = () => {
+      if (!introTimer) return;
+      clearTimeout(introTimer);
+      introTimer = null;
+    };
+
+    const revealMainContent = () => {
+      modal.classList.remove('is-intro');
+    };
+
+    const runIntro = () => {
+      clearIntroTimer();
+      modal.classList.add('is-intro');
+      introTimer = setTimeout(revealMainContent, 2000);
+    };
+
 
     const open = () => {
       modal.classList.add('is-open');
       modal.setAttribute('aria-hidden', 'false');
       document.documentElement.classList.add('modal-open');
       document.body.classList.add('modal-open');
+      runIntro();
     };
 
     const close = () => {
+      clearIntroTimer();
+      modal.classList.remove('is-open', 'is-intro');
       modal.classList.remove('is-open');
       modal.setAttribute('aria-hidden', 'true');
       document.documentElement.classList.remove('modal-open');
       document.body.classList.remove('modal-open');
     };
+
+    if (introGif) {
+      introGif.addEventListener('error', revealMainContent, { once: true });
+    }
 
     modal.addEventListener('click', e => {
       const t = e.target;
@@ -597,6 +631,67 @@ document.addEventListener('DOMContentLoaded', () => {
 
     setTimeout(open, 10);
   }
+
+  function initCertificateModal() {
+    const modal = document.getElementById('certificate-modal');
+    const frame = document.getElementById('certificate-modal-frame');
+    const fallbackLink = document.getElementById('certificate-modal-open-new');
+    if (!modal || !frame) return;
+
+    const open = (pdfUrl, title) => {
+      if (!pdfUrl) return;
+      const safeTitle = (title || 'Sertifika Önizleme').trim();
+      const heading = modal.querySelector('#certificateModalTitle');
+      if (heading) heading.textContent = safeTitle;
+
+      if (fallbackLink) fallbackLink.setAttribute('href', pdfUrl);
+      frame.setAttribute('src', `${pdfUrl}#view=FitH`);
+
+      modal.classList.add('is-open');
+      modal.setAttribute('aria-hidden', 'false');
+      document.documentElement.classList.add('modal-open');
+      document.body.classList.add('modal-open');
+    };
+
+    const close = () => {
+      modal.classList.remove('is-open');
+      modal.setAttribute('aria-hidden', 'true');
+      frame.removeAttribute('src');
+      document.documentElement.classList.remove('modal-open');
+      document.body.classList.remove('modal-open');
+    };
+
+    const openFromTrigger = trigger => {
+      const card = trigger && trigger.closest ? trigger.closest('.certificate-card') : null;
+      if (!card) return;
+      const pdfUrl = card.getAttribute('data-pdf') || '';
+      const titleEl = card.querySelector('h4');
+      const title = titleEl ? titleEl.textContent : 'Sertifika Önizleme';
+      if (!pdfUrl) return;
+      open(pdfUrl, title);
+    };
+
+    const actionButtons = Array.from(document.querySelectorAll('[data-open-certificate="true"]'));
+    actionButtons.forEach(button => {
+      button.addEventListener('click', e => {
+        e.preventDefault();
+        openFromTrigger(button);
+      });
+    });
+
+    document.addEventListener('click', e => {
+      const closeTarget = e.target && e.target.closest ? e.target.closest('[data-certificate-close="true"]') : null;
+      if (closeTarget) {
+        e.preventDefault();
+        close();
+      }
+    });
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && modal.classList.contains('is-open')) close();
+    });
+  }
+
 
   function initFooterContactLinks() {
     const contactLinks = Array.from(document.querySelectorAll('.contact-link[data-contact]'));
@@ -737,6 +832,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initFooterContactLinks();
     setActiveNavLink();
     initInfoModal();
+    initCertificateModal();
     mountBackButton();
     initAccordion();
     initParticles();
