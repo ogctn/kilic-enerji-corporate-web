@@ -21,7 +21,7 @@
             <div class="hero-content">
                 <h1 class="hero-title">Kurumsal <span class="gradient-text-legal">Sertifikalarımız</span></h1>
                 <p class="hero-description">
-                    Biensis, Crealab ve Feniks markalarımıza ait sertifikalar listelenmiştir.
+                    Biensis, Crealab ve Feniks şirketlerine ait sertifikalar listelenmiştir.
                     Kartlardaki görüntüle butonu ile sertifikaları inceleyebilirsiniz.
                 </p>
             </div>
@@ -31,7 +31,7 @@
             <div class="content-wrapper certificates-wrapper">
                 <div class="section-title certificates-title">
                     <h2>Sertifika Arşivi</h2>
-                    <p>PDF dosyalarına önizleme görselleri ile birlikte erişebilirsiniz.</p>
+                    <p>Sertifikaları sayfa içinde açılan pop-up pencerede hızlıca inceleyebilirsiniz.</p>
                 </div>
 
                 <div class="certificate-group" aria-labelledby="biensis-heading">
@@ -173,13 +173,12 @@
         </section>
 
 
-        <div id="certificate-modal" class="certificate-modal" aria-hidden="true" role="dialog" aria-labelledby="certificateModalTitle">
+        <div id="certificate-modal" class="certificate-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="certificateModalTitle">
             <div class="certificate-modal__backdrop" data-certificate-close="true"></div>
             <div class="certificate-modal__dialog" role="document">
-                <div class="certificate-modal__header">
-                    <h3 id="certificateModalTitle">Sertifika Önizleme</h3>
-                    <button type="button" class="certificate-modal__close" aria-label="Sertifika penceresini kapat" data-certificate-close="true">×</button>
-                </div>
+                    <div>
+                        <h3 id="certificateModalTitle">Sertifika Önizleme</h3>
+                    </div>
                 <div class="certificate-modal__content">
                     <iframe id="certificate-modal-frame" title="Sertifika PDF görüntüleyici" loading="lazy"></iframe>
                 </div>

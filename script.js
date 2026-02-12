@@ -335,71 +335,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  function initMobileLogosManualLoop() {
-    const tracks = Array.from(document.querySelectorAll('.logos-slide-track'));
-    if (!tracks.length) return;
-
-    const mq = window.matchMedia('(max-width: 768px)');
-    const cleanups = [];
-
-    tracks.forEach(track => {
-      let syncing = false;
-
-      const syncLoopPosition = () => {
-        if (!mq.matches) return;
-        const half = track.scrollWidth / 2;
-        if (!half || !Number.isFinite(half)) return;
-
-        const threshold = 24;
-        if (track.scrollLeft <= threshold) {
-          syncing = true;
-          track.scrollLeft += half;
-          syncing = false;
-          return;
-        }
-
-        const maxScroll = track.scrollWidth - track.clientWidth;
-        if (track.scrollLeft >= maxScroll - threshold) {
-          syncing = true;
-          track.scrollLeft -= half;
-          syncing = false;
-        }
-      };
-
-      const primeLoop = () => {
-        if (!mq.matches) return;
-        const half = track.scrollWidth / 2;
-        if (!half || !Number.isFinite(half)) return;
-        track.scrollLeft = half;
-      };
-
-      const onScroll = () => {
-        if (syncing) return;
-        syncLoopPosition();
-      };
-
-      const onModeChange = e => {
-        if (e.matches) primeLoop();
-        else track.scrollLeft = 0;
-      };
-
-      track.addEventListener('scroll', onScroll, { passive: true });
-      if (mq.addEventListener) mq.addEventListener('change', onModeChange);
-      else mq.addListener(onModeChange);
-
-      requestAnimationFrame(primeLoop);
-
-      cleanups.push(() => {
-        track.removeEventListener('scroll', onScroll);
-        if (mq.removeEventListener) mq.removeEventListener('change', onModeChange);
-        else mq.removeListener(onModeChange);
-      });
-    });
-
-    window.addEventListener('beforeunload', () => cleanups.forEach(fn => fn()), { once: true });
-  }
-
-
   function initScrollSnap() {
     const htmlEl = document.documentElement;
     if (prefersReducedMotion() || isTouch() || isMobile()) {
@@ -610,7 +545,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const close = () => {
       clearIntroTimer();
       modal.classList.remove('is-open', 'is-intro');
-      modal.classList.remove('is-open');
       modal.setAttribute('aria-hidden', 'true');
       document.documentElement.classList.remove('modal-open');
       document.body.classList.remove('modal-open');
