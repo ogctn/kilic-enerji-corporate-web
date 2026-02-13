@@ -9,9 +9,10 @@
         <link rel="stylesheet" href="style.css">
         <script src="https://unpkg.com/lucide@latest" defer></script>
         <script src="script.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js" defer></script>
     </head>
    
-    <body>
+     <body>
 
         <div id="navbar-placeholder"></div>
 
@@ -31,15 +32,14 @@
             <div class="content-wrapper certificates-wrapper">
                 <div class="section-title certificates-title">
                     <h2>Sertifika Arşivi</h2>
-                    <p>Sertifikaları sayfa içinde açılan pop-up pencerede hızlıca inceleyebilirsiniz.</p>
                 </div>
 
-                <div class="certificate-group" aria-labelledby="biensis-heading">
+                <div class="certificate-group" data-reveal aria-labelledby="biensis-heading">
                     <div class="certificate-group__head">
                         <h3 id="biensis-heading">Biensis</h3>
                     </div>
                     <div class="certificate-grid">
-                        <article class="certificate-card" data-pdf="assets/docs/certs/biensis/biensis-9001-sertifikasi.pdf">
+                        <article class="certificate-card" data-reveal data-pdf="assets/docs/certs/biensis/biensis-9001-sertifikasi.pdf">
                             <img src="assets/img/certs/biensis/biensis-9001-sertifikasi.jpg" alt="Biensis ISO 9001 Sertifikası önizleme görseli" loading="lazy">
                             <div class="certificate-card__body">
                                 <h4>ISO 9001</h4>
@@ -47,7 +47,7 @@
                                 <button type="button" class="certificate-card__action" data-open-certificate="true">Görüntüle</button>
                             </div>
                         </article>
-                        <article class="certificate-card" data-pdf="assets/docs/certs/biensis/biensis-14001-sertifikasi.pdf">
+                        <article class="certificate-card" data-reveal data-pdf="assets/docs/certs/biensis/biensis-14001-sertifikasi.pdf">
                             <img src="assets/img/certs/biensis/biensis-14001-sertifikasi.jpg" alt="Biensis ISO 14001 Sertifikası önizleme görseli" loading="lazy">
                             <div class="certificate-card__body">
                                 <h4>ISO 14001</h4>
@@ -55,7 +55,7 @@
                                 <button type="button" class="certificate-card__action" data-open-certificate="true">Görüntüle</button>
                             </div>
                         </article>
-                        <article class="certificate-card" data-pdf="assets/docs/certs/biensis/biensis-20000-1-sertifikasi.pdf">
+                        <article class="certificate-card" data-reveal data-pdf="assets/docs/certs/biensis/biensis-20000-1-sertifikasi.pdf">
                             <img src="assets/img/certs/biensis/biensis-20000-1-sertifikasi.jpg" alt="Biensis ISO 20000-1 Sertifikası önizleme görseli" loading="lazy">
                             <div class="certificate-card__body">
                                 <h4>ISO 20000-1</h4>
@@ -63,7 +63,7 @@
                                 <button type="button" class="certificate-card__action" data-open-certificate="true">Görüntüle</button>
                             </div>
                         </article>
-                        <article class="certificate-card" data-pdf="assets/docs/certs/biensis/biensis-27001-sertifikasi.pdf">
+                        <article class="certificate-card" data-reveal data-pdf="assets/docs/certs/biensis/biensis-27001-sertifikasi.pdf">
                             <img src="assets/img/certs/biensis/biensis-27001-sertifikasi.jpg" alt="Biensis ISO 27001 Sertifikası önizleme görseli" loading="lazy">
                             <div class="certificate-card__body">
                                 <h4>ISO 27001</h4>
@@ -74,12 +74,12 @@
                     </div>
                 </div>
 
-                <div class="certificate-group" aria-labelledby="crealab-heading">
+                <div class="certificate-group" data-reveal aria-labelledby="crealab-heading">
                     <div class="certificate-group__head">
                         <h3 id="crealab-heading">Crealab</h3>
                     </div>
                     <div class="certificate-grid">
-                        <article class="certificate-card" data-pdf="assets/docs/certs/crealab/crealab-teknoloji-sertifika-9001-turkak-logolu-r0.pdf">
+                        <article class="certificate-card" data-reveal data-pdf="assets/docs/certs/crealab/crealab-teknoloji-sertifika-9001-turkak-logolu-r0.pdf">
                             <img src="assets/img/certs/crealab/crealab-teknoloji-sertifika-9001-turkak-logolu-r0.jpg" alt="Crealab ISO 9001 Sertifikası önizleme görseli" loading="lazy">
                             <div class="certificate-card__body">
                                 <h4>ISO 9001</h4>
@@ -87,7 +87,7 @@
                                 <button type="button" class="certificate-card__action" data-open-certificate="true">Görüntüle</button>
                             </div>
                         </article>
-                        <article class="certificate-card" data-pdf="assets/docs/certs/crealab/crealab-teknoloji-sertifika-20000-1-turkak-logolu-r0.pdf">
+                        <article class="certificate-card" data-reveal data-pdf="assets/docs/certs/crealab/crealab-teknoloji-sertifika-20000-1-turkak-logolu-r0.pdf">
                             <img src="assets/img/certs/crealab/crealab-teknoloji-sertifika-20000-1-turkak-logolu-r0.jpg" alt="Crealab ISO 20000-1 Sertifikası önizleme görseli" loading="lazy">
                             <div class="certificate-card__body">
                                 <h4>ISO 20000-1</h4>
@@ -95,7 +95,7 @@
                                 <button type="button" class="certificate-card__action" data-open-certificate="true">Görüntüle</button>
                             </div>
                         </article>
-                        <article class="certificate-card" data-pdf="assets/docs/certs/crealab/crealab-teknoloji-sertifika-27001-2022-turkak-r0-bilgi-guvenligi-yonetim.pdf">
+                        <article class="certificate-card" data-reveal data-pdf="assets/docs/certs/crealab/crealab-teknoloji-sertifika-27001-2022-turkak-r0-bilgi-guvenligi-yonetim.pdf">
                             <img src="assets/img/certs/crealab/crealab-teknoloji-sertifika-27001-2022-turkak-r0-bilgi-guvenligi-yonetim.jpg" alt="Crealab ISO 27001 Sertifikası önizleme görseli" loading="lazy">
                             <div class="certificate-card__body">
                                 <h4>ISO 27001:2022</h4>
@@ -103,7 +103,7 @@
                                 <button type="button" class="certificate-card__action" data-open-certificate="true">Görüntüle</button>
                             </div>
                         </article>
-                        <article class="certificate-card" data-pdf="assets/docs/certs/crealab/crealab-teknoloji-sertifika-27701-turkak-logolu-r0.pdf">
+                        <article class="certificate-card" data-reveal data-pdf="assets/docs/certs/crealab/crealab-teknoloji-sertifika-27701-turkak-logolu-r0.pdf">
                             <img src="assets/img/certs/crealab/crealab-teknoloji-sertifika-27701-turkak-logolu-r0.jpg" alt="Crealab ISO 27701 Sertifikası önizleme görseli" loading="lazy">
                             <div class="certificate-card__body">
                                 <h4>ISO 27701</h4>
@@ -111,7 +111,7 @@
                                 <button type="button" class="certificate-card__action" data-open-certificate="true">Görüntüle</button>
                             </div>
                         </article>
-                        <article class="certificate-card" data-pdf="assets/docs/certs/crealab/crealab-teknoloji-sertifika-42001-r0.pdf">
+                        <article class="certificate-card" data-reveal data-pdf="assets/docs/certs/crealab/crealab-teknoloji-sertifika-42001-r0.pdf">
                             <img src="assets/img/certs/crealab/crealab-teknoloji-sertifika-42001-r0.jpg" alt="Crealab ISO 42001 Sertifikası önizleme görseli" loading="lazy">
                             <div class="certificate-card__body">
                                 <h4>ISO 42001</h4>
@@ -119,7 +119,7 @@
                                 <button type="button" class="certificate-card__action" data-open-certificate="true">Görüntüle</button>
                             </div>
                         </article>
-                        <article class="certificate-card" data-pdf="assets/docs/certs/crealab/crealab-15504-spice.pdf">
+                        <article class="certificate-card" data-reveal data-pdf="assets/docs/certs/crealab/crealab-15504-spice.pdf">
                             <img src="assets/img/certs/crealab/crealab-15504-spice.jpg" alt="Crealab SPICE 15504 Sertifikası önizleme görseli" loading="lazy">
                             <div class="certificate-card__body">
                                 <h4>SPICE 15504</h4>
@@ -130,12 +130,12 @@
                     </div>
                 </div>
 
-                <div class="certificate-group" aria-labelledby="feniks-heading">
+                <div class="certificate-group" data-reveal aria-labelledby="feniks-heading">
                     <div class="certificate-group__head">
                         <h3 id="feniks-heading">Feniks</h3>
                     </div>
                     <div class="certificate-grid">
-                        <article class="certificate-card" data-pdf="assets/docs/certs/feniks/feniks-9001-sertifikasi.pdf">
+                        <article class="certificate-card" data-reveal data-pdf="assets/docs/certs/feniks/feniks-9001-sertifikasi.pdf">
                             <img src="assets/img/certs/feniks/feniks-9001-sertifikasi.jpg" alt="Feniks ISO 9001 Sertifikası önizleme görseli" loading="lazy">
                             <div class="certificate-card__body">
                                 <h4>ISO 9001</h4>
@@ -143,7 +143,7 @@
                                 <button type="button" class="certificate-card__action" data-open-certificate="true">Görüntüle</button>
                             </div>
                         </article>
-                        <article class="certificate-card" data-pdf="assets/docs/certs/feniks/feniks-14001-sertifikasi.pdf">
+                        <article class="certificate-card" data-reveal data-pdf="assets/docs/certs/feniks/feniks-14001-sertifikasi.pdf">
                             <img src="assets/img/certs/feniks/feniks-14001-sertifikasi.jpg" alt="Feniks ISO 14001 Sertifikası önizleme görseli" loading="lazy">
                             <div class="certificate-card__body">
                                 <h4>ISO 14001</h4>
@@ -151,7 +151,7 @@
                                 <button type="button" class="certificate-card__action" data-open-certificate="true">Görüntüle</button>
                             </div>
                         </article>
-                        <article class="certificate-card" data-pdf="assets/docs/certs/feniks/feniks-20000-1-sertifikasi.pdf">
+                        <article class="certificate-card" data-reveal data-pdf="assets/docs/certs/feniks/feniks-20000-1-sertifikasi.pdf">
                             <img src="assets/img/certs/feniks/feniks-20000-1-sertifikasi.jpg" alt="Feniks ISO 20000-1 Sertifikası önizleme görseli" loading="lazy">
                             <div class="certificate-card__body">
                                 <h4>ISO 20000-1</h4>
@@ -159,7 +159,7 @@
                                 <button type="button" class="certificate-card__action" data-open-certificate="true">Görüntüle</button>
                             </div>
                         </article>
-                        <article class="certificate-card" data-pdf="assets/docs/certs/feniks/feniks-27001-sertifikasi.pdf">
+                        <article class="certificate-card" data-reveal data-pdf="assets/docs/certs/feniks/feniks-27001-sertifikasi.pdf">
                             <img src="assets/img/certs/feniks/feniks-27001-sertifikasi.jpg" alt="Feniks ISO 27001 Sertifikası önizleme görseli" loading="lazy">
                             <div class="certificate-card__body">
                                 <h4>ISO 27001</h4>
@@ -176,11 +176,17 @@
         <div id="certificate-modal" class="certificate-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="certificateModalTitle">
             <div class="certificate-modal__backdrop" data-certificate-close="true"></div>
             <div class="certificate-modal__dialog" role="document">
-                    <div>
+                    <div class="certificate-modal__header">
                         <h3 id="certificateModalTitle">Sertifika Önizleme</h3>
+                        <button type="button" class="certificate-modal__close" data-certificate-close="true" aria-label="Sertifika modalını kapat">×</button>
+                    </div>
+                    <div class="certificate-modal__footer">
+                        <a id="certificate-modal-open-new" href="#" target="_blank" rel="noopener noreferrer">Yeni sekmede aç</a>
                     </div>
                 <div class="certificate-modal__content">
-                    <iframe id="certificate-modal-frame" title="Sertifika PDF görüntüleyici" loading="lazy"></iframe>
+                    <div id="certificate-modal-status" class="certificate-modal__status" aria-live="polite">PDF yükleniyor...</div>
+                    <div id="certificate-modal-pages" class="certificate-modal__pages"></div>
+                    <iframe id="certificate-modal-frame" title="Sertifika PDF görüntüleyici" loading="eager" hidden></iframe>
                 </div>
             </div>
         </div>

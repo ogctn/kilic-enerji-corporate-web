@@ -13,10 +13,28 @@ document.addEventListener('DOMContentLoaded', () => {
   async function injectPartial(placeholderId, url) {
     const target = document.getElementById(placeholderId);
     if (!target) return false;
+
+    const cacheKey = `partial::${url}`;
+
     try {
-      const res = await fetch(url, { cache: 'no-cache' });
+      const cached = sessionStorage.getItem(cacheKey);
+      if (cached) {
+        target.innerHTML = cached;
+        initLucide();
+        return true;
+      }
+    } catch (_) {}
+
+    try {
+      const res = await fetch(url, { cache: 'force-cache' });
       if (!res.ok) throw new Error(String(res.status));
-      target.innerHTML = await res.text();
+      const html = await res.text();
+      target.innerHTML = html;
+
+      try {
+        sessionStorage.setItem(cacheKey, html);
+      } catch (_) {}
+
       initLucide();
       return true;
     } catch (_) {
@@ -25,8 +43,10 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   async function loadSharedLayout() {
-    await injectPartial('navbar-placeholder', 'partials/navbar.html');
-    await injectPartial('footer-placeholder', 'partials/footer.html');
+    await Promise.all([
+      injectPartial('navbar-placeholder', 'partials/navbar.html'),
+      injectPartial('footer-placeholder', 'partials/footer.html')
+    ]);
   }
 
   function initLucide() {
@@ -36,20 +56,6 @@ document.addEventListener('DOMContentLoaded', () => {
   function getCurrentFileName() {
     const file = (window.location.pathname.split('/').pop() || '').trim();
     return file || 'index.html';
-  }
-
-  function getFileNameFromHref(href) {
-    if (!href) return '';
-
-    try {
-      const parsed = new URL(href, window.location.origin);
-      const file = (parsed.pathname.split('/').pop() || '').trim();
-      return (file || 'index.html').toLowerCase();
-    } catch (_) {
-      const cleanHref = href.split('#')[0].split('?')[0].trim();
-      const file = (cleanHref.split('/').pop() || '').trim();
-      return (file || 'index.html').toLowerCase();
-    }
   }
 
   function setActiveNavLink() {
@@ -297,7 +303,7 @@ document.addEventListener('DOMContentLoaded', () => {
     else setTimeout(start, 500);
   }
 
-  function initPremiumMouseEffect() {
+  function initMouseEffect() {
     if (isTouch()) return;
     const sections = Array.from(document.querySelectorAll('.section-premium'));
     if (!sections.length) return;
@@ -450,40 +456,40 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function initContactMapSwitcher() {
-      const mapSection = document.getElementById('contact-map-section');
-      const mapFrame = document.getElementById('contact-map-iframe');
-      const mapTitle = document.getElementById('map-title');
-      const mapDescription = document.getElementById('map-description');
-      const switchLinks = Array.from(document.querySelectorAll('.map-switch-link'));
+    const mapSection = document.getElementById('contact-map-section');
+    const mapFrame = document.getElementById('contact-map-iframe');
+    const mapTitle = document.getElementById('map-title');
+    const mapDescription = document.getElementById('map-description');
+    const switchLinks = Array.from(document.querySelectorAll('.map-switch-link'));
 
-      if (!mapSection || !mapFrame || !mapTitle || !mapDescription || !switchLinks.length) return;
+    if (!mapSection || !mapFrame || !mapTitle || !mapDescription || !switchLinks.length) return;
 
-      const setMapFromCard = card => {
+    const setMapFromCard = card => {
+      if (!card) return;
+      const nextTitle = card.getAttribute('data-map-title') || '';
+      const nextDescription = card.getAttribute('data-map-description') || '';
+      const nextSrc = card.getAttribute('data-map-src') || '';
+
+      if (nextTitle) mapTitle.textContent = nextTitle;
+      if (nextDescription) mapDescription.textContent = nextDescription;
+      if (nextSrc && mapFrame.getAttribute('src') !== nextSrc) mapFrame.setAttribute('src', nextSrc);
+
+      document.querySelectorAll('.office-card.is-active').forEach(el => el.classList.remove('is-active'));
+      card.classList.add('is-active');
+    };
+
+    const defaultCard = document.querySelector('.office-card');
+    if (defaultCard) setMapFromCard(defaultCard);
+
+    switchLinks.forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        const card = link.closest('.office-card');
         if (!card) return;
-        const nextTitle = card.getAttribute('data-map-title') || '';
-        const nextDescription = card.getAttribute('data-map-description') || '';
-        const nextSrc = card.getAttribute('data-map-src') || '';
-
-        if (nextTitle) mapTitle.textContent = nextTitle;
-        if (nextDescription) mapDescription.textContent = nextDescription;
-        if (nextSrc && mapFrame.getAttribute('src') !== nextSrc) mapFrame.setAttribute('src', nextSrc);
-
-        document.querySelectorAll('.office-card.is-active').forEach(el => el.classList.remove('is-active'));
-        card.classList.add('is-active');
-      };
-
-      const defaultCard = document.querySelector('.office-card');
-      if (defaultCard) setMapFromCard(defaultCard);
-
-      switchLinks.forEach(link => {
-        link.addEventListener('click', e => {
-          e.preventDefault();
-          const card = link.closest('.office-card');
-          if (!card) return;
-          setMapFromCard(card);
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
+        setMapFromCard(card);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
       });
+    });
   }
 
   function getServiceBackHrefFromCurrent() {
@@ -496,8 +502,7 @@ document.addEventListener('DOMContentLoaded', () => {
       'hakkimizda.html',
       'iletisim.html',
       'is-birligi.html',
-      'kvkk.html',
-      'sss.html'
+      'sertifikalar.html'
     ]);
     if (mainPages.has(currentFile)) return null;
 
@@ -566,66 +571,143 @@ document.addEventListener('DOMContentLoaded', () => {
     setTimeout(open, 10);
   }
 
-  function initCertificateModal() {
+    function initCertificateModal() {
     const modal = document.getElementById('certificate-modal');
-    const frame = document.getElementById('certificate-modal-frame');
+    const pagesContainer = document.getElementById('certificate-modal-pages');
+    const statusEl = document.getElementById('certificate-modal-status');
     const fallbackLink = document.getElementById('certificate-modal-open-new');
-    if (!modal || !frame) return;
+    const frame = document.getElementById('certificate-modal-frame');
+
+    if (!modal || !pagesContainer) return;
+
+    if (typeof pdfjsLib !== 'undefined') {
+      pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
+    }
+
+    const renderPDF = async (url) => {
+      try {
+        pagesContainer.innerHTML = ''; 
+        if (statusEl) {
+          statusEl.style.display = 'block';
+          statusEl.textContent = 'Sertifika sayfaları hazırlanıyor...';
+        }
+
+        const loadingTask = pdfjsLib.getDocument({
+          url: url,
+          disableRange: false,
+          disableAutoFetch: false
+        });
+        
+        const pdf = await loadingTask.promise;
+        if (statusEl) statusEl.style.display = 'none';
+
+        // Çoklu sayfa desteği: Tüm sayfaları sırayla render et
+        for (let i = 1; i <= pdf.numPages; i++) {
+          const page = await pdf.getPage(i);
+          const viewport = page.getViewport({ scale: 1.3 }); // Netlik ve hız dengesi
+          
+          const canvas = document.createElement('canvas');
+          canvas.className = 'certificate-modal__page-canvas';
+          const context = canvas.getContext('2d', { alpha: false }); // GPU hızlandırma
+          
+          canvas.height = viewport.height;
+          canvas.width = viewport.width;
+
+          const renderContext = {
+            canvasContext: context,
+            viewport: viewport,
+            intent: 'display'
+          };
+
+          await page.render(renderContext).promise;
+          pagesContainer.appendChild(canvas);
+        }
+
+      } catch (error) {
+        console.error('PDF Render Hatası:', error);
+        if (statusEl) statusEl.textContent = 'Hata: PDF içeriği yüklenemedi.';
+      }
+    };
 
     const open = (pdfUrl, title) => {
       if (!pdfUrl) return;
-      const safeTitle = (title || 'Sertifika Önizleme').trim();
-      const heading = modal.querySelector('#certificateModalTitle');
-      if (heading) heading.textContent = safeTitle;
 
-      if (fallbackLink) fallbackLink.setAttribute('href', pdfUrl);
-      frame.setAttribute('src', `${pdfUrl}#view=FitH`);
-
+      // Erişilebilirlik Düzenlemesi: Odak hatasını önlemek için is-open'dan önce false yapıyoruz
+      modal.setAttribute('aria-hidden', 'false'); 
       modal.classList.add('is-open');
-      modal.setAttribute('aria-hidden', 'false');
       document.documentElement.classList.add('modal-open');
       document.body.classList.add('modal-open');
+
+      const heading = modal.querySelector('#certificateModalTitle');
+      if (heading) heading.textContent = title || 'Sertifika Önizleme';
+      if (fallbackLink) fallbackLink.setAttribute('href', pdfUrl);
+      if (frame) frame.style.display = 'none'; 
+
+      renderPDF(pdfUrl);
     };
 
     const close = () => {
       modal.classList.remove('is-open');
-      modal.setAttribute('aria-hidden', 'true');
-      frame.removeAttribute('src');
+      modal.setAttribute('aria-hidden', 'true'); 
+      
       document.documentElement.classList.remove('modal-open');
       document.body.classList.remove('modal-open');
+
+      pagesContainer.innerHTML = ''; // Belleği temizle
     };
 
-    const openFromTrigger = trigger => {
-      const card = trigger && trigger.closest ? trigger.closest('.certificate-card') : null;
-      if (!card) return;
-      const pdfUrl = card.getAttribute('data-pdf') || '';
-      const titleEl = card.querySelector('h4');
-      const title = titleEl ? titleEl.textContent : 'Sertifika Önizleme';
-      if (!pdfUrl) return;
-      open(pdfUrl, title);
-    };
-
-    const actionButtons = Array.from(document.querySelectorAll('[data-open-certificate="true"]'));
-    actionButtons.forEach(button => {
+    // Event Listeners
+    document.querySelectorAll('[data-open-certificate="true"]').forEach(button => {
       button.addEventListener('click', e => {
         e.preventDefault();
-        openFromTrigger(button);
+        const card = button.closest('.certificate-card');
+        if (!card) return;
+        const pdfUrl = card.getAttribute('data-pdf') || '';
+        const title = card.querySelector('h4')?.textContent || 'Sertifika';
+        open(pdfUrl, title);
       });
     });
 
     document.addEventListener('click', e => {
-      const closeTarget = e.target && e.target.closest ? e.target.closest('[data-certificate-close="true"]') : null;
-      if (closeTarget) {
+      if (e.target.closest('[data-certificate-close="true"]')) {
         e.preventDefault();
         close();
       }
     });
 
     document.addEventListener('keydown', e => {
-      if (e.key === 'Escape' && modal.classList.contains('is-open')) close();
+      if (e.key === 'Escape' && modal.classList.contains('is-open')) {
+          close();
+        }
     });
   }
 
+
+  function initScrollReveal() {
+    const revealTargets = Array.from(document.querySelectorAll('[data-reveal]'));
+    if (!revealTargets.length || prefersReducedMotion()) return;
+
+    if (!('IntersectionObserver' in window)) {
+      revealTargets.forEach(el => el.classList.add('is-visible'));
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      entries => {
+        entries.forEach(entry => {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        });
+      },
+      { rootMargin: '0px 0px -8% 0px', threshold: 0.12 }
+    );
+
+    revealTargets.forEach((el, index) => {
+      el.style.setProperty('--reveal-delay', `${Math.min(index * 55, 320)}ms`);
+      observer.observe(el);
+    });
+  }
 
   function initFooterContactLinks() {
     const contactLinks = Array.from(document.querySelectorAll('.contact-link[data-contact]'));
@@ -766,11 +848,12 @@ document.addEventListener('DOMContentLoaded', () => {
     initFooterContactLinks();
     setActiveNavLink();
     initInfoModal();
+    initScrollReveal();
     initCertificateModal();
     mountBackButton();
     initAccordion();
     initParticles();
-    initPremiumMouseEffect();
+    initMouseEffect();
     initMobileLogosManualLoop();
     initScrollSnap();
     initContactMapSwitcher();
