@@ -571,7 +571,7 @@ document.addEventListener('DOMContentLoaded', () => {
     setTimeout(open, 10);
   }
 
-    function initCertificateModal() {
+  function initCertificateModal() {
     const modal = document.getElementById('certificate-modal');
     const pagesContainer = document.getElementById('certificate-modal-pages');
     const statusEl = document.getElementById('certificate-modal-status');
@@ -601,14 +601,13 @@ document.addEventListener('DOMContentLoaded', () => {
         const pdf = await loadingTask.promise;
         if (statusEl) statusEl.style.display = 'none';
 
-        // Çoklu sayfa desteği: Tüm sayfaları sırayla render et
         for (let i = 1; i <= pdf.numPages; i++) {
           const page = await pdf.getPage(i);
-          const viewport = page.getViewport({ scale: 1.3 }); // Netlik ve hız dengesi
+          const viewport = page.getViewport({ scale: 1.3 });
           
           const canvas = document.createElement('canvas');
           canvas.className = 'certificate-modal__page-canvas';
-          const context = canvas.getContext('2d', { alpha: false }); // GPU hızlandırma
+          const context = canvas.getContext('2d', { alpha: false });
           
           canvas.height = viewport.height;
           canvas.width = viewport.width;
@@ -632,7 +631,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const open = (pdfUrl, title) => {
       if (!pdfUrl) return;
 
-      // Erişilebilirlik Düzenlemesi: Odak hatasını önlemek için is-open'dan önce false yapıyoruz
       modal.setAttribute('aria-hidden', 'false'); 
       modal.classList.add('is-open');
       document.documentElement.classList.add('modal-open');
@@ -653,10 +651,9 @@ document.addEventListener('DOMContentLoaded', () => {
       document.documentElement.classList.remove('modal-open');
       document.body.classList.remove('modal-open');
 
-      pagesContainer.innerHTML = ''; // Belleği temizle
+      pagesContainer.innerHTML = '';
     };
 
-    // Event Listeners
     document.querySelectorAll('[data-open-certificate="true"]').forEach(button => {
       button.addEventListener('click', e => {
         e.preventDefault();
@@ -700,11 +697,11 @@ document.addEventListener('DOMContentLoaded', () => {
           observer.unobserve(entry.target);
         });
       },
-      { rootMargin: '0px 0px -8% 0px', threshold: 0.12 }
+      { rootMargin: '0px 0px -2% 0px', threshold: 0.01 }
     );
 
-    revealTargets.forEach((el, index) => {
-      el.style.setProperty('--reveal-delay', `${Math.min(index * 55, 320)}ms`);
+    revealTargets.forEach(el => {
+      el.style.setProperty('--reveal-delay', `220ms`);
       observer.observe(el);
     });
   }
