@@ -168,7 +168,7 @@ img { max-width: 100%; display: block; }
     object-fit: cover; z-index: 1; opacity: 1; 
 }
 .hero .hero-bg {
-    animation: slowZoom 20s infinite alternate;
+    animation: slowZoom 30s infinite alternate;
 }
 .hero-overlay {
     position: absolute; top: 0; left: 0; width: 100%; height: 100%;
@@ -382,7 +382,7 @@ footer {
     background-color: #0f172a;
     isolation: isolate;
 }
-.page-hero .hero-bg { animation: slowZoom 20s infinite alternate; }
+.page-hero .hero-bg { animation: slowZoom 30s infinite alternate; }
     @keyframes slowZoom {
         0% { transform: scale(1); }
         100% { transform: scale(1.5); }
@@ -706,7 +706,7 @@ footer {
     align-items: center;
     width: max-content;
     gap: 20px;
-    animation: scrollLogos 20s linear infinite;
+    animation: scrollLogos 30s linear infinite;
 }
 .slide-logo {
     width: 240px;
@@ -1044,7 +1044,6 @@ footer {
   gap: 14px;
   padding: 8px 8px 6px;
   min-height: clamp(300px, 46vh, 430px);
-  overflow: hidden;
 }
 .modal-intro {
   position: absolute;
@@ -1064,7 +1063,6 @@ footer {
   transition: opacity 420ms cubic-bezier(.2,.9,.2,1), transform 460ms cubic-bezier(.2,.9,.2,1), filter 460ms ease;
   pointer-events: none;
   z-index: 2;
-  filter: blur(8px);
 }
 .modal-intro__frame {
   position: relative;
@@ -1097,8 +1095,6 @@ footer {
   display: block;
   image-rendering: auto;
   filter: contrast(0.95) saturate(1.2) brightness(0.85) drop-shadow(0 12px 16px rgba(0, 0, 0, 0.22));
-  transform: translateZ(0) scale(1.01);
-  backface-visibility: hidden;
 }
 .modal-main {
   display: flex;
@@ -1106,7 +1102,6 @@ footer {
   gap: 14px;
   opacity: 1;
   transform: translateY(0) scale(1);
-  filter: blur(0);
   transition: opacity 420ms cubic-bezier(.2,.9,.2,1), transform 460ms cubic-bezier(.2,.9,.2,1), filter 460ms ease;
 }
 .info-modal.is-intro .modal-intro {
@@ -1120,7 +1115,6 @@ footer {
 .info-modal.is-intro .modal-main {
   opacity: 0;
   transform: translateY(18px) scale(0.985);
-  filter: blur(8px);
   pointer-events: none;
 }
 .modal-pill {
@@ -1173,7 +1167,6 @@ footer {
   inset: -40% -30%;
   background: radial-gradient(circle at 30% 40%, rgba(var(--secondary-rgb), 0.24), transparent 55%),
               radial-gradient(circle at 70% 60%, rgba(225, 112, 85, 0.20), transparent 55%);
-  filter: blur(16px);
   opacity: 0.9;
   pointer-events: none;
 }

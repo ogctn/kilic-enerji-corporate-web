@@ -510,66 +510,129 @@ document.addEventListener('DOMContentLoaded', () => {
     return `hizmetler.html#${slug}`;
   }
 
-  function initInfoModal() {
-    const modal = document.getElementById('info-modal');
-    if (!modal) return;
+function initInfoModal() {
+  const modal = document.getElementById('info-modal');
+  if (!modal) return;
 
-    const current = getCurrentFileName().toLowerCase();
-    const isHome = current === 'index.html' || current === 'index';
-    const isPartners = current === 'is-birligi.html' || current === 'is-birligi';
-    if (!isHome && !isPartners) return;
+  const current = getCurrentFileName().toLowerCase();
+  const isHome = current === 'index.html' || current === 'index';
+  const isPartners = current === 'is-birligi.html' || current === 'is-birligi';
+  if (!isHome && !isPartners) return;
 
-    const introGif = modal.querySelector('.modal-intro__gif');
-    let introTimer = null;
+  // Aynı class'ı koruyoruz: .modal-intro__gif artık <video>
+  const introVideo = modal.querySelector('.modal-intro__gif');
+  let introTimer = null;
 
-    const clearIntroTimer = () => {
-      if (!introTimer) return;
-      clearTimeout(introTimer);
-      introTimer = null;
-    };
+  const clearIntroTimer = () => {
+    if (!introTimer) return;
+    clearTimeout(introTimer);
+    introTimer = null;
+  };
 
-    const revealMainContent = () => {
-      modal.classList.remove('is-intro');
-    };
+  const ensureVideoSources = () => {
+    if (!introVideo || introVideo.tagName !== 'VIDEO') return false;
+    if (introVideo.querySelector('source')) return true;
 
-    const runIntro = () => {
-      clearIntroTimer();
-      modal.classList.add('is-intro');
-      introTimer = setTimeout(revealMainContent, 2000);
-    };
+    const webm = introVideo.getAttribute('data-webm');
+    const mp4 = introVideo.getAttribute('data-mp4');
 
-
-    const open = () => {
-      modal.classList.add('is-open');
-      modal.setAttribute('aria-hidden', 'false');
-      document.documentElement.classList.add('modal-open');
-      document.body.classList.add('modal-open');
-      runIntro();
-    };
-
-    const close = () => {
-      clearIntroTimer();
-      modal.classList.remove('is-open', 'is-intro');
-      modal.setAttribute('aria-hidden', 'true');
-      document.documentElement.classList.remove('modal-open');
-      document.body.classList.remove('modal-open');
-    };
-
-    if (introGif) {
-      introGif.addEventListener('error', revealMainContent, { once: true });
+    if (webm) {
+      const s1 = document.createElement('source');
+      s1.src = webm;
+      s1.type = 'video/webm';
+      introVideo.appendChild(s1);
     }
 
-    modal.addEventListener('click', e => {
-      const t = e.target;
-      if (t && t.closest && t.closest('[data-close="true"]')) close();
-    });
+    if (mp4) {
+      const s2 = document.createElement('source');
+      s2.src = mp4;
+      s2.type = 'video/mp4';
+      introVideo.appendChild(s2);
+    }
 
-    document.addEventListener('keydown', e => {
-      if (e.key === 'Escape' && modal.classList.contains('is-open')) close();
-    });
+    return !!introVideo.querySelector('source');
+  };
 
-    setTimeout(open, 10);
+  const startIntroVideo = () => {
+    if (!introVideo || introVideo.tagName !== 'VIDEO') return;
+
+    if (prefersReducedMotion()) return;
+
+    const hasSources = ensureVideoSources();
+    if (!hasSources) return;
+
+    introVideo.load();
+
+    const p = introVideo.play();
+    if (p && typeof p.catch === 'function') {
+      p.catch(() => {
+      });
+    }
+  };
+
+  const stopIntroVideo = () => {
+    if (!introVideo || introVideo.tagName !== 'VIDEO') return;
+
+    try {
+      introVideo.pause();
+      introVideo.currentTime = 0;
+    } catch (_) {}
+
+    introVideo.querySelectorAll('source').forEach(s => s.remove());
+    try {
+      introVideo.load();
+    } catch (_) {}
+  };
+
+  const revealMainContent = () => {
+    modal.classList.remove('is-intro');
+    stopIntroVideo();
+  };
+
+  const runIntro = () => {
+    clearIntroTimer();
+    modal.classList.add('is-intro');
+
+    requestAnimationFrame(startIntroVideo);
+
+    introTimer = setTimeout(revealMainContent, 3000);
+  };
+
+  const open = () => {
+    modal.classList.add('is-open');
+    modal.setAttribute('aria-hidden', 'false');
+    document.documentElement.classList.add('modal-open');
+    document.body.classList.add('modal-open');
+    runIntro();
+  };
+
+  const close = () => {
+    clearIntroTimer();
+    stopIntroVideo();
+
+    modal.classList.remove('is-open', 'is-intro');
+    modal.setAttribute('aria-hidden', 'true');
+    document.documentElement.classList.remove('modal-open');
+    document.body.classList.remove('modal-open');
+  };
+
+  if (introVideo && introVideo.tagName === 'VIDEO') {
+    introVideo.addEventListener('error', () => {
+      stopIntroVideo();
+    });
   }
+
+  modal.addEventListener('click', e => {
+    const t = e.target;
+    if (t && t.closest && t.closest('[data-close="true"]')) close();
+  });
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && modal.classList.contains('is-open')) close();
+  });
+
+  setTimeout(open, 10);
+}
 
   function initCertificateModal() {
     const modal = document.getElementById('certificate-modal');
@@ -838,13 +901,12 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   async function bootstrap() {
-    rememberInternalNavigation();
+    initInfoModal();
     await loadSharedLayout();
     initLucide();
     initNavbar();
     initFooterContactLinks();
     setActiveNavLink();
-    initInfoModal();
     initScrollReveal();
     initCertificateModal();
     mountBackButton();
@@ -854,6 +916,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initMobileLogosManualLoop();
     initScrollSnap();
     initContactMapSwitcher();
+    rememberInternalNavigation();
   }
   bootstrap();
 });
